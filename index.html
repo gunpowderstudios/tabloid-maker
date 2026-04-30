@@ -54,6 +54,12 @@
       border-radius: 8px;
     }
 
+    input[type="range"] {
+      padding: 0;
+      border: 0;
+      border-radius: 0;
+    }
+
     textarea {
       min-height: 90px;
       resize: vertical;
@@ -73,7 +79,8 @@
     button:hover { background: #a90000; }
     .secondary { background: #111; }
 
-    .print-tip {
+    .print-tip,
+    .control-tip {
       font-size: 12px;
       margin-top: 6px;
       color: #666;
@@ -164,6 +171,7 @@
       width: 100%;
       height: 360px;
       object-fit: cover;
+      object-position: center 50%;
       border: 4px solid white;
       margin-top: 10px;
       background: #ddd;
@@ -318,6 +326,10 @@
       <label for="imageInput">Main photo</label>
       <input id="imageInput" type="file" accept="image/*">
 
+      <label for="imagePositionInput">Adjust photo position</label>
+      <input id="imagePositionInput" type="range" min="0" max="100" value="50">
+      <p class="control-tip">Move the photo up or down inside the frame.</p>
+
       <label for="bottomHeadingInput">Bottom section heading</label>
       <input id="bottomHeadingInput" value="In Other News...">
 
@@ -381,6 +393,7 @@ Local hero enters dungeon fully prepared, except for sword. "I thought I packed 
     var subheadInput = document.getElementById('subheadInput');
     var taglineInput = document.getElementById('taglineInput');
     var imageInput = document.getElementById('imageInput');
+    var imagePositionInput = document.getElementById('imagePositionInput');
     var bottomHeadingInput = document.getElementById('bottomHeadingInput');
     var bottomTextInput = document.getElementById('bottomTextInput');
 
@@ -420,6 +433,10 @@ Local hero enters dungeon fully prepared, except for sword. "I thought I packed 
       return p;
     }
 
+    function updateImagePosition() {
+      heroPhoto.style.objectPosition = 'center ' + imagePositionInput.value + '%';
+    }
+
     function updatePage() {
       paperName.textContent = paperInput.value || 'The Redtop';
       headline.textContent = headlineInput.value || 'Headline Goes Here!';
@@ -434,6 +451,8 @@ Local hero enters dungeon fully prepared, except for sword. "I thought I packed 
           bottomText.appendChild(makeParagraph(lines[i]));
         }
       }
+
+      updateImagePosition();
     }
 
     function randomWeather() {
@@ -465,6 +484,7 @@ Local hero enters dungeon fully prepared, except for sword. "I thought I packed 
     taglineInput.addEventListener('input', updatePage);
     bottomHeadingInput.addEventListener('input', updatePage);
     bottomTextInput.addEventListener('input', updatePage);
+    imagePositionInput.addEventListener('input', updateImagePosition);
 
     imageInput.addEventListener('change', function(event) {
       var file = event.target.files[0];
@@ -475,6 +495,8 @@ Local hero enters dungeon fully prepared, except for sword. "I thought I packed 
         heroPhoto.src = e.target.result;
         heroPhoto.style.display = 'block';
         photoPlaceholder.style.display = 'none';
+        imagePositionInput.value = 50;
+        updateImagePosition();
       };
       reader.readAsDataURL(file);
     });
@@ -530,6 +552,7 @@ Local hero enters dungeon fully prepared, except for sword. "I thought I packed 
       console.assert(splitLines('').length === 1, 'splitLines should handle empty text');
       console.assert(typeof updatePage === 'function', 'updatePage should exist');
       console.assert(typeof randomWeather === 'function', 'randomWeather should exist');
+      console.assert(typeof updateImagePosition === 'function', 'updateImagePosition should exist');
     }
 
     updatePage();
