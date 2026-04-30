@@ -330,6 +330,9 @@
       <input id="imagePositionInput" type="range" min="0" max="100" value="50">
       <p class="control-tip">Move the photo up or down inside the frame.</p>
 
+      <label for="footerInput">Footer quote / banner</label>
+      <textarea id="footerInput">&quot;If you want to tell people the truth, make them laugh, otherwise they'll kill you.&quot; — Oscar Wilde</textarea>
+
       <label for="bottomHeadingInput">Bottom section heading</label>
       <input id="bottomHeadingInput" value="In Other News...">
 
@@ -378,7 +381,7 @@ Local hero enters dungeon fully prepared, except for sword. "I thought I packed 
         </section>
 
         <footer class="footer-banner">
-          "If you want to tell people the truth, make them laugh, otherwise they'll kill you." — Oscar Wilde  <span class="tiny">see page 3</span>
+          <span id="footerText">"If you want to tell people the truth, make them laugh, otherwise they'll kill you." — Oscar Wilde</span> <span class="tiny">see page 3</span>
         </footer>
         <div style="text-align:center; font-size:12px; margin-top:8px; color:#444;">
           © gunpowderstudios.co.uk — Have fun making your own tabloid newspapers. Always keep it clean, funny, and family-friendly… but have fun. We are not responsible for what you write, create, or share. Information is only stored in your browser cache and no files are stored anywhere.
@@ -394,6 +397,7 @@ Local hero enters dungeon fully prepared, except for sword. "I thought I packed 
     var taglineInput = document.getElementById('taglineInput');
     var imageInput = document.getElementById('imageInput');
     var imagePositionInput = document.getElementById('imagePositionInput');
+    var footerInput = document.getElementById('footerInput');
     var bottomHeadingInput = document.getElementById('bottomHeadingInput');
     var bottomTextInput = document.getElementById('bottomTextInput');
 
@@ -403,6 +407,7 @@ Local hero enters dungeon fully prepared, except for sword. "I thought I packed 
     var tagline = document.getElementById('tagline');
     var heroPhoto = document.getElementById('heroPhoto');
     var photoPlaceholder = document.getElementById('photoPlaceholder');
+    var footerText = document.getElementById('footerText');
     var bottomHeading = document.getElementById('bottomHeading');
     var bottomText = document.getElementById('bottomText');
     var weatherBox = document.getElementById('weatherBox');
@@ -442,6 +447,7 @@ Local hero enters dungeon fully prepared, except for sword. "I thought I packed 
       headline.textContent = headlineInput.value || 'Headline Goes Here!';
       subhead.textContent = subheadInput.value || 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.';
       tagline.textContent = taglineInput.value || 'The paper that supports the lavish lifestyle of its editor';
+      footerText.textContent = footerInput.value || 'Footer text goes here';
       bottomHeading.textContent = bottomHeadingInput.value || 'In Other News...';
 
       bottomText.innerHTML = '';
@@ -482,6 +488,7 @@ Local hero enters dungeon fully prepared, except for sword. "I thought I packed 
     headlineInput.addEventListener('input', updatePage);
     subheadInput.addEventListener('input', updatePage);
     taglineInput.addEventListener('input', updatePage);
+    footerInput.addEventListener('input', updatePage);
     bottomHeadingInput.addEventListener('input', updatePage);
     bottomTextInput.addEventListener('input', updatePage);
     imagePositionInput.addEventListener('input', updateImagePosition);
