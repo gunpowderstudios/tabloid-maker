@@ -151,6 +151,15 @@
       color: #333;
     }
 
+    .weather-date {
+      display: block;
+      font-size: 11px;
+      margin-bottom: 4px;
+      font-weight: bold;
+      color: #333;
+      text-transform: uppercase;
+    }
+
     .lead {
       border: 6px solid #111;
       padding: 8px;
@@ -359,6 +368,7 @@ Local hero enters dungeon fully prepared, except for sword. "I thought I packed 
           </div>
 
           <div class="top-ad" id="weatherBox">
+            <span class="weather-date" id="weatherDate">Today</span>
             <span class="weather-icon">&#9728;</span>
             18&deg;C<br>
             <span class="tiny">London - Sunny</span>
@@ -411,6 +421,7 @@ Local hero enters dungeon fully prepared, except for sword. "I thought I packed 
     var bottomHeading = document.getElementById('bottomHeading');
     var bottomText = document.getElementById('bottomText');
     var weatherBox = document.getElementById('weatherBox');
+    var weatherDate = document.getElementById('weatherDate');
 
     var sillyHeadlines = [
       'Local Wizard Blames Goblins For Everything!',
@@ -461,6 +472,22 @@ Local hero enters dungeon fully prepared, except for sword. "I thought I packed 
       updateImagePosition();
     }
 
+    function getCurrentDateText() {
+      var today = new Date();
+      return today.toLocaleDateString('en-GB', {
+        weekday: 'short',
+        day: 'numeric',
+        month: 'short',
+        year: 'numeric'
+      });
+    }
+
+    function setWeatherDate() {
+      if (weatherDate) {
+        weatherDate.textContent = getCurrentDateText();
+      }
+    }
+
     function randomWeather() {
       var temps = Math.floor(Math.random() * 15) + 10;
       var conditions = ['Sunny', 'Cloudy', 'Rainy', 'Stormy', 'Windy'];
@@ -478,7 +505,8 @@ Local hero enters dungeon fully prepared, except for sword. "I thought I packed 
         quote = 'Probably fine. Probably.';
       }
 
-      weatherBox.innerHTML = '<span class="weather-icon">' + icons[i] + '</span>' +
+      weatherBox.innerHTML = '<span class="weather-date">' + getCurrentDateText() + '</span>' +
+        '<span class="weather-icon">' + icons[i] + '</span>' +
         temps + '&deg;C<br>' +
         '<span class="tiny">London - ' + conditions[i] + '</span>' +
         '<span class="weather-quote">' + quote + '</span>';
@@ -559,9 +587,11 @@ Local hero enters dungeon fully prepared, except for sword. "I thought I packed 
       console.assert(splitLines('').length === 1, 'splitLines should handle empty text');
       console.assert(typeof updatePage === 'function', 'updatePage should exist');
       console.assert(typeof randomWeather === 'function', 'randomWeather should exist');
+      console.assert(typeof getCurrentDateText === 'function', 'getCurrentDateText should exist');
       console.assert(typeof updateImagePosition === 'function', 'updateImagePosition should exist');
     }
 
+    setWeatherDate();
     updatePage();
     runSelfTests();
   </script>
