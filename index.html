@@ -73,6 +73,12 @@
     button:hover { background: #a90000; }
     .secondary { background: #111; }
 
+    .print-tip {
+      font-size: 12px;
+      margin-top: 6px;
+      color: #666;
+    }
+
     .newspaper-wrap {
       overflow-x: auto;
       padding-bottom: 20px;
@@ -323,7 +329,7 @@ Local hero enters dungeon fully prepared, except for sword. "I thought I packed 
       <button id="randomBtn" type="button">Make it more ridiculous</button>
       <button class="secondary" id="shareBtn" type="button">Share</button>
       <button class="secondary" type="button" onclick="window.print()">Print / Save as PDF</button>
-      <p style="font-size:12px; margin-top:6px; color:#666;">Tip: Turn ON "Background graphics" in print settings to keep colours.</p>
+      <p class="print-tip">Tip: Turn ON "Background graphics" in print settings to keep colours.</p>
     </section>
 
     <section class="newspaper-wrap">
@@ -412,8 +418,7 @@ Local hero enters dungeon fully prepared, except for sword. "I thought I packed 
       bottomHeading.textContent = bottomHeadingInput.value || 'In Other News...';
 
       bottomText.innerHTML = '';
-      var lines = (bottomTextInput.value || '').split('
-');
+      var lines = (bottomTextInput.value || '').split('\n');
       for (var i = 0; i < lines.length; i++) {
         if (lines[i].trim()) {
           bottomText.appendChild(makeParagraph(lines[i]));
