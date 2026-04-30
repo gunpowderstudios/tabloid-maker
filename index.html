@@ -293,6 +293,8 @@
       }
     }
   </style>
+
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 </head>
 
 <body>
@@ -327,6 +329,7 @@ Dragon denies fire claims after three cottages mysteriously became toast. Offici
 Local hero enters dungeon fully prepared, except for sword. "I thought I packed it," he said.</textarea>
 
       <button id="randomBtn" type="button">Make it more ridiculous</button>
+      <button class="secondary" id="downloadBtn" type="button">Download PNG</button>
       <button class="secondary" id="shareBtn" type="button">Share</button>
       <button class="secondary" type="button" onclick="window.print()">Print / Save as PDF</button>
       <p class="print-tip">Tip: Turn ON "Background graphics" in print settings to keep colours.</p>
@@ -404,6 +407,10 @@ Local hero enters dungeon fully prepared, except for sword. "I thought I packed 
       'Our brave reporters investigated for nearly seven minutes and found almost everything.'
     ];
 
+    function splitLines(text) {
+      return (text || '').split('\n');
+    }
+
     function makeParagraph(text) {
       var p = document.createElement('p');
       p.textContent = text;
@@ -418,7 +425,7 @@ Local hero enters dungeon fully prepared, except for sword. "I thought I packed 
       bottomHeading.textContent = bottomHeadingInput.value || 'In Other News...';
 
       bottomText.innerHTML = '';
-      var lines = (bottomTextInput.value || '').split('\n');
+      var lines = splitLines(bottomTextInput.value);
       for (var i = 0; i < lines.length; i++) {
         if (lines[i].trim()) {
           bottomText.appendChild(makeParagraph(lines[i]));
@@ -476,6 +483,25 @@ Local hero enters dungeon fully prepared, except for sword. "I thought I packed 
       updatePage();
     });
 
+    document.getElementById('downloadBtn').addEventListener('click', function() {
+      var newspaper = document.getElementById('newspaper');
+
+      if (typeof html2canvas !== 'function') {
+        alert('Download tool is still loading. Please try again in a moment.');
+        return;
+      }
+
+      html2canvas(newspaper, {
+        scale: 2,
+        backgroundColor: '#ffffff'
+      }).then(function(canvas) {
+        var link = document.createElement('a');
+        link.download = 'tabloid-front-page.png';
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+      });
+    });
+
     document.getElementById('shareBtn').addEventListener('click', function() {
       var shareText = (paperInput.value || 'The Redtop') + ': ' + (headlineInput.value || 'Headline Goes Here!');
 
@@ -496,7 +522,15 @@ Local hero enters dungeon fully prepared, except for sword. "I thought I packed 
       }
     });
 
+    function runSelfTests() {
+      console.assert(splitLines('one\ntwo').length === 2, 'splitLines should split two lines');
+      console.assert(splitLines('').length === 1, 'splitLines should handle empty text');
+      console.assert(typeof updatePage === 'function', 'updatePage should exist');
+      console.assert(typeof randomWeather === 'function', 'randomWeather should exist');
+    }
+
     updatePage();
+    runSelfTests();
   </script>
 </body>
 </html>
