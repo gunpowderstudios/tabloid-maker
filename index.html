@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Red Top Tabloid Maker</title>
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #e7e7e7;
+      color: #111;
+    }
+
+    .app {
+      display: grid;
+      grid-template-columns: 340px 1fr;
+      gap: 24px;
+      padding: 24px;
+      max-width: 1300px;
+      margin: auto;
+    }
+
+    .controls {
+      background: white;
+      padding: 20px;
+      border-radius: 14px;
+      box-shadow: 0 8px 24px rgba(0,0,0,.12);
+      height: fit-content;
+    }
+
+    .controls h1 {
+      margin-top: 0;
+      font-size: 24px;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin: 14px 0 6px;
+    }
+
+    input, textarea, button {
+      width: 100%;
+      font: inherit;
+    }
+
+    input, textarea {
+      padding: 10px;
+      border: 2px solid #ccc;
+      border-radius: 8px;
+    }
+
+    textarea {
+      min-height: 90px;
+      resize: vertical;
+    }
+
+    button {
+      margin-top: 14px;
+      padding: 12px 14px;
+      border: 0;
+      border-radius: 8px;
+      background: #d40000;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover { background: #a90000; }
+
+    .secondary {
+      background: #111;
+    }
+
+    .newspaper-wrap {
+      overflow-x: auto;
+      padding-bottom: 20px;
+    }
+
+    .newspaper {
+      width: 760px;
+      background: #fff;
+      padding: 14px;
+      margin: 0 auto;
+      box-shadow: 0 10px 30px rgba(0,0,0,.25);
+      border: 1px solid #ccc;
+    }
+
+    .masthead {
+      background: #e00000;
+      color: white;
+      padding: 8px 14px 10px;
+      display: grid;
+      grid-template-columns: 1fr 170px;
+      gap: 12px;
+      align-items: stretch;
+    }
+
+    .paper-name {
+      font-size: 78px;
+      line-height: .85;
+      font-weight: 900;
+      font-style: italic;
+      letter-spacing: -5px;
+      text-transform: uppercase;
+      overflow-wrap: anywhere;
+    }
+
+    .tagline {
+      font-size: 13px;
+      font-weight: bold;
+      margin-top: 6px;
+      text-transform: uppercase;
+    }
+
+    .top-ad {
+      background: white;
+      color: #00448c;
+      padding: 8px;
+      font-weight: 900;
+      text-align: center;
+      font-size: 22px;
+      border-left: 5px solid #003a78;
+    }
+
+    .poll {
+      display: grid;
+      grid-template-columns: 210px 1fr;
+      margin: 10px 0;
+      background: #064893;
+      color: white;
+      align-items: center;
+    }
+
+    .poll img {
+      width: 100%;
+      height: 90px;
+      object-fit: cover;
+    }
+
+    .poll-text {
+      padding: 8px 14px;
+      font-size: 34px;
+      font-weight: 900;
+      line-height: .95;
+    }
+
+    .poll-text span {
+      font-size: 18px;
+      display: block;
+    }
+
+    .main-grid {
+      display: grid;
+      grid-template-columns: 210px 1fr;
+      gap: 14px;
+    }
+
+    .sidebar {
+      border-right: 2px solid #ddd;
+      padding-right: 12px;
+    }
+
+    .side-photo {
+      width: 100%;
+      height: 130px;
+      object-fit: cover;
+      border: 4px solid #eee;
+      margin-bottom: 10px;
+    }
+
+    .side-headline {
+      font-size: 24px;
+      line-height: 1;
+      text-decoration: underline;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+
+    .side-copy {
+      font-size: 12px;
+      column-count: 1;
+      text-align: justify;
+    }
+
+    .lead {
+      border: 6px solid #111;
+      padding: 8px;
+      background: #101820;
+      color: white;
+      position: relative;
+    }
+
+    .strapline {
+      background: white;
+      color: #d40000;
+      text-align: center;
+      font-weight: 900;
+      font-size: 15px;
+      padding: 4px;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+    }
+
+    .lead-content {
+      display: grid;
+      grid-template-columns: 1fr 150px;
+      gap: 10px;
+      align-items: start;
+    }
+
+    .main-headline {
+      font-size: 76px;
+      line-height: .86;
+      font-weight: 1000;
+      letter-spacing: -3px;
+      text-transform: uppercase;
+      word-break: break-word;
+    }
+
+    .hero-photo {
+      width: 150px;
+      height: 150px;
+      object-fit: cover;
+      border: 3px solid white;
+    }
+
+    .subhead {
+      margin-top: 8px;
+      font-size: 19px;
+      line-height: 1.2;
+      font-weight: bold;
+      border-top: 2px solid white;
+      padding-top: 8px;
+    }
+
+    .footer-banner {
+      margin-top: 12px;
+      background: #e00000;
+      color: white;
+      font-weight: 900;
+      text-transform: uppercase;
+      padding: 8px 10px;
+      font-size: 18px;
+    }
+
+    .tiny {
+      font-size: 10px;
+      font-weight: bold;
+    }
+
+    @media (max-width: 950px) {
+      .app { grid-template-columns: 1fr; }
+      .controls { order: 1; }
+      .newspaper-wrap { order: 2; }
+    }
+
+    @media print {
+      body { background: white; }
+      .controls { display: none; }
+      .app { display: block; padding: 0; }
+      .newspaper { box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <section class="controls">
+      <h1>Tabloid Front Page Maker</h1>
+      <p>Make your own ridiculous red-top front page. Add a headline, paper name and photo.</p>
+
+      <label for="paperInput">Paper name</label>
+      <input id="paperInput" value="The Redtop" />
+
+      <label for="headlineInput">Main headline</label>
+      <textarea id="headlineInput">Dungeon Crawling Good For Society!</textarea>
+
+      <label for="subheadInput">Subheading</label>
+      <textarea id="subheadInput">Brave editors say rolling dice and drawing maps is now officially very important.</textarea>
+
+      <label for="taglineInput">Tagline</label>
+      <input id="taglineInput" value="The paper that supports the lavish lifestyle of its editor" />
+
+      <label for="imageInput">Main photo</label>
+      <input id="imageInput" type="file" accept="image/*" />
+
+      <button id="randomBtn">Make it more ridiculous</button>
+      <button class="secondary" id="shareBtn">Share</button>
+      <button class="secondary" onclick="window.print()">Print / Save as PDF</button>
+    </section>
+
+    <section class="newspaper-wrap">
+      <article class="newspaper" id="newspaper">
+        <header class="masthead">
+          <div>
+            <div class="paper-name" id="paperName">The Redtop</div>
+            <div class="tagline" id="tagline">The paper that supports the lavish lifestyle of its editor</div>
+          </div>
+          <div class="top-ad">BANKERS!<br><span class="tiny">From the paper that loves a good scandal</span></div>
+        </header>
+
+        <section class="poll">
+          <img id="pollImage" src="https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=800&auto=format&fit=crop" alt="Crowd" />
+          <div class="poll-text">93% <span>think we are irresponsible</span></div>
+        </section>
+
+        <main class="main-grid">
+          <aside class="sidebar">
+            <img class="side-photo" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=400&auto=format&fit=crop" alt="Side story" />
+            <div class="side-headline">How Gnomes saved British culture</div>
+            <p class="side-copy">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam.</p>
+            <div class="side-headline">Standards fall at rival tabloid</div>
+            <p class="side-copy">Praesent dapibus, neque id cursus faucibus, tortor neque egestas augue, eu vulputate magna eros eu erat. Aliquam erat volutpat.</p>
+          </aside>
+
+          <section class="lead">
+            <div class="strapline">Now with added prurience and titillation</div>
+            <div class="lead-content">
+              <div class="main-headline" id="headline">Dungeon Crawling Good For Society!</div>
+              <img class="hero-photo" id="heroPhoto" src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=500&auto=format&fit=crop" alt="Main story" />
+            </div>
+            <div class="subhead" id="subhead">Brave editors say rolling dice and drawing maps is now officially very important.</div>
+          </section>
+        </main>
+
+        <footer class="footer-banner">We subvert the establishment, uphold truth and accountability <span class="tiny">see page 3</span></footer>
+      </article>
+    </section>
+  </div>
+
+  <script>
+    const paperInput = document.getElementById('paperInput');
+    const headlineInput = document.getElementById('headlineInput');
+    const subheadInput = document.getElementById('subheadInput');
+    const taglineInput = document.getElementById('taglineInput');
+    const imageInput = document.getElementById('imageInput');
+
+    const paperName = document.getElementById('paperName');
+    const headline = document.getElementById('headline');
+    const subhead = document.getElementById('subhead');
+    const tagline = document.getElementById('tagline');
+    const heroPhoto = document.getElementById('heroPhoto');
+
+    const sillyHeadlines = [
+      'Local Wizard Blames Goblins For Everything!',
+      'Dungeon Crawling Good For Society!',
+      'Elf Seen Buying Cheese At Midnight!',
+      'Dragon Denies Burning Village!',
+      'Board Games Make People 93% More Heroic!',
+      'Gnome Editor Demands More Treasure!'
+    ];
+
+    const sillySubs = [
+      'Experts are baffled, villagers are furious, and one goblin refused to comment.',
+      'A shocking new report suggests rolling dice may improve bravery, luck and snack consumption.',
+      'Officials say the matter is under review, probably after lunch.',
+      'Our brave reporters investigated for nearly seven minutes and found almost everything.'
+    ];
+
+    function updatePage() {
+      paperName.textContent = paperInput.value || 'The Redtop';
+      headline.textContent = headlineInput.value || 'Headline Goes Here!';
+      subhead.textContent = subheadInput.value || 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.';
+      tagline.textContent = taglineInput.value || 'The paper that supports the lavish lifestyle of its editor';
+    }
+
+    [paperInput, headlineInput, subheadInput, taglineInput].forEach(input => {
+      input.addEventListener('input', updatePage);
+    });
+
+    imageInput.addEventListener('change', event => {
+      const file = event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = e => {
+        heroPhoto.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    });
+
+    document.getElementById('randomBtn').addEventListener('click', () => {
+      headlineInput.value = sillyHeadlines[Math.floor(Math.random() * sillyHeadlines.length)];
+      subheadInput.value = sillySubs[Math.floor(Math.random() * sillySubs.length)];
+      updatePage();
+    });
+
+    document.getElementById('shareBtn').addEventListener('click', async () => {
+      const shareText = `${paperInput.value}: ${headlineInput.value}`;
+
+      if (navigator.share) {
+        try {
+          await navigator.share({
+            title: paperInput.value,
+            text: shareText,
+            url: window.location.href
+          });
+        } catch (error) {
+          console.log('Share cancelled', error);
+        }
+      } else {
+        await navigator.clipboard.writeText(shareText + ' ' + window.location.href);
+        alert('Share text copied to clipboard!');
+      }
+    });
+
+    updatePage();
+  </script>
+</body>
+</html>
