@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Red Top Tabloid Maker</title>
 
   <style>
@@ -32,7 +32,10 @@
       height: fit-content;
     }
 
-    .controls h1 { margin-top: 0; font-size: 24px; }
+    .controls h1 {
+      margin-top: 0;
+      font-size: 24px;
+    }
 
     label {
       display: block;
@@ -135,8 +138,6 @@
       color: #333;
     }
 
-    .main-grid { display: block; }
-
     .lead {
       border: 6px solid #111;
       padding: 8px;
@@ -161,6 +162,19 @@
       margin-top: 10px;
       background: #ddd;
       display: block;
+    }
+
+    .placeholder {
+      height: 360px;
+      border: 4px solid white;
+      margin-top: 10px;
+      background: #ddd;
+      color: #666;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 32px;
+      font-weight: bold;
     }
 
     .subhead {
@@ -217,10 +231,60 @@
     }
 
     @media print {
-      body { background: white; }
-      .controls { display: none; }
-      .app { display: block; padding: 0; }
-      .newspaper { box-shadow: none; }
+      * {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+
+      @page {
+        size: A4 portrait;
+        margin: 8mm;
+      }
+
+      html, body {
+        background: white !important;
+        margin: 0 !important;
+        padding: 0 !important;
+      }
+
+      .controls {
+        display: none !important;
+      }
+
+      .app {
+        display: block !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        max-width: none !important;
+      }
+
+      .newspaper-wrap {
+        overflow: visible !important;
+        padding: 0 !important;
+      }
+
+      .newspaper {
+        width: 190mm !important;
+        margin: 0 auto !important;
+        box-shadow: none !important;
+        border: 1px solid #ccc !important;
+        page-break-inside: avoid !important;
+      }
+
+      .masthead {
+        background: #e00000 !important;
+        color: white !important;
+      }
+
+      .lead {
+        background: #101820 !important;
+        color: white !important;
+      }
+
+      .footer-banner {
+        background: #e00000 !important;
+        color: white !important;
+      }
     }
   </style>
 </head>
@@ -232,7 +296,7 @@
       <p>Make your own ridiculous red-top front page. Add a headline, paper name and photo.</p>
 
       <label for="paperInput">Paper name</label>
-      <input id="paperInput" value="The Redtop" />
+      <input id="paperInput" value="The Redtop">
 
       <label for="headlineInput">Main headline</label>
       <textarea id="headlineInput">Dungeon Crawling Good For Society!</textarea>
@@ -241,13 +305,13 @@
       <textarea id="subheadInput">Brave editors say rolling dice and drawing maps is now officially very important.</textarea>
 
       <label for="taglineInput">Tagline</label>
-      <input id="taglineInput" value="The paper that supports the lavish lifestyle of its editor" />
+      <input id="taglineInput" value="The paper that supports the lavish lifestyle of its editor">
 
       <label for="imageInput">Main photo</label>
-      <input id="imageInput" type="file" accept="image/*" />
+      <input id="imageInput" type="file" accept="image/*">
 
       <label for="bottomHeadingInput">Bottom section heading</label>
-      <input id="bottomHeadingInput" value="In Other News..." />
+      <input id="bottomHeadingInput" value="In Other News...">
 
       <label for="bottomTextInput">Bottom 3-column text</label>
       <textarea id="bottomTextInput">Wizard banned from pub after turning the jukebox into a frog. Witnesses say the frog had excellent taste in music.
@@ -270,22 +334,18 @@ Local hero enters dungeon fully prepared, except for sword. "I thought I packed 
           </div>
 
           <div class="top-ad" id="weatherBox">
-            <span class="weather-icon">☀️</span>
-            18°C<br>
+            <span class="weather-icon">&#9728;</span>
+            18&deg;C<br>
             <span class="tiny">London - Sunny</span>
             <span class="weather-quote">Don't forget your hat!</span>
           </div>
         </header>
 
-        <main class="main-grid">
+        <main>
           <section class="lead">
             <div class="main-headline" id="headline">Dungeon Crawling Good For Society!</div>
-            <img
-              class="hero-photo"
-              id="heroPhoto"
-              src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='400'%3E%3Crect width='100%25' height='100%25' fill='%23dddddd'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='Arial' font-size='36' fill='%23666666'%3EUpload your photo%3C/text%3E%3C/svg%3E"
-              alt="Main story"
-            />
+            <div class="placeholder" id="photoPlaceholder">Upload your photo</div>
+            <img class="hero-photo" id="heroPhoto" alt="Main story" style="display:none;">
             <div class="subhead" id="subhead">Brave editors say rolling dice and drawing maps is now officially very important.</div>
           </section>
         </main>
@@ -303,23 +363,25 @@ Local hero enters dungeon fully prepared, except for sword. "I thought I packed 
   </div>
 
   <script>
-    const paperInput = document.getElementById('paperInput');
-    const headlineInput = document.getElementById('headlineInput');
-    const subheadInput = document.getElementById('subheadInput');
-    const taglineInput = document.getElementById('taglineInput');
-    const imageInput = document.getElementById('imageInput');
-    const bottomHeadingInput = document.getElementById('bottomHeadingInput');
-    const bottomTextInput = document.getElementById('bottomTextInput');
+    var paperInput = document.getElementById('paperInput');
+    var headlineInput = document.getElementById('headlineInput');
+    var subheadInput = document.getElementById('subheadInput');
+    var taglineInput = document.getElementById('taglineInput');
+    var imageInput = document.getElementById('imageInput');
+    var bottomHeadingInput = document.getElementById('bottomHeadingInput');
+    var bottomTextInput = document.getElementById('bottomTextInput');
 
-    const paperName = document.getElementById('paperName');
-    const headline = document.getElementById('headline');
-    const subhead = document.getElementById('subhead');
-    const tagline = document.getElementById('tagline');
-    const heroPhoto = document.getElementById('heroPhoto');
-    const bottomHeading = document.getElementById('bottomHeading');
-    const bottomText = document.getElementById('bottomText');
+    var paperName = document.getElementById('paperName');
+    var headline = document.getElementById('headline');
+    var subhead = document.getElementById('subhead');
+    var tagline = document.getElementById('tagline');
+    var heroPhoto = document.getElementById('heroPhoto');
+    var photoPlaceholder = document.getElementById('photoPlaceholder');
+    var bottomHeading = document.getElementById('bottomHeading');
+    var bottomText = document.getElementById('bottomText');
+    var weatherBox = document.getElementById('weatherBox');
 
-    const sillyHeadlines = [
+    var sillyHeadlines = [
       'Local Wizard Blames Goblins For Everything!',
       'Dungeon Crawling Good For Society!',
       'Elf Seen Buying Cheese At Midnight!',
@@ -328,20 +390,17 @@ Local hero enters dungeon fully prepared, except for sword. "I thought I packed 
       'Gnome Editor Demands More Treasure!'
     ];
 
-    const sillySubs = [
+    var sillySubs = [
       'Experts are baffled, villagers are furious, and one goblin refused to comment.',
       'A shocking new report suggests rolling dice may improve bravery, luck and snack consumption.',
       'Officials say the matter is under review, probably after lunch.',
       'Our brave reporters investigated for nearly seven minutes and found almost everything.'
     ];
 
-    function escapeHTML(text) {
-      return text
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;')
-        .replace(/'/g, '&#039;');
+    function makeParagraph(text) {
+      var p = document.createElement('p');
+      p.textContent = text;
+      return p;
     }
 
     function updatePage() {
@@ -351,22 +410,23 @@ Local hero enters dungeon fully prepared, except for sword. "I thought I packed 
       tagline.textContent = taglineInput.value || 'The paper that supports the lavish lifestyle of its editor';
       bottomHeading.textContent = bottomHeadingInput.value || 'In Other News...';
 
-      const paragraphs = (bottomTextInput.value || '')
-        .split('\n')
-        .filter(line => line.trim())
-        .map(line => `<p>${escapeHTML(line)}</p>`)
-        .join('');
-
-      bottomText.innerHTML = paragraphs;
+      bottomText.innerHTML = '';
+      var lines = (bottomTextInput.value || '').split('
+');
+      for (var i = 0; i < lines.length; i++) {
+        if (lines[i].trim()) {
+          bottomText.appendChild(makeParagraph(lines[i]));
+        }
+      }
     }
 
     function randomWeather() {
-      const temps = Math.floor(Math.random() * 15) + 10;
-      const conditions = ['Sunny', 'Cloudy', 'Rainy', 'Stormy', 'Windy'];
-      const icons = ['☀️', '☁️', '🌧️', '⛈️', '💨'];
-      const i = Math.floor(Math.random() * conditions.length);
+      var temps = Math.floor(Math.random() * 15) + 10;
+      var conditions = ['Sunny', 'Cloudy', 'Rainy', 'Stormy', 'Windy'];
+      var icons = ['&#9728;', '&#9729;', '&#127783;', '&#9928;', '&#128168;'];
+      var i = Math.floor(Math.random() * conditions.length);
+      var quote = "Don't forget your hat!";
 
-      let quote = "Don't forget your hat!";
       if (conditions[i] === 'Rainy' || conditions[i] === 'Stormy') {
         quote = "Don't forget your wellies!";
       }
@@ -377,56 +437,56 @@ Local hero enters dungeon fully prepared, except for sword. "I thought I packed 
         quote = 'Probably fine. Probably.';
       }
 
-      document.getElementById('weatherBox').innerHTML = `
-        <span class="weather-icon">${icons[i]}</span>
-        ${temps}°C<br>
-        <span class="tiny">London - ${conditions[i]}</span>
-        <span class="weather-quote">${quote}</span>
-      `;
+      weatherBox.innerHTML = '<span class="weather-icon">' + icons[i] + '</span>' +
+        temps + '&deg;C<br>' +
+        '<span class="tiny">London - ' + conditions[i] + '</span>' +
+        '<span class="weather-quote">' + quote + '</span>';
     }
 
-    [paperInput, headlineInput, subheadInput, taglineInput, bottomHeadingInput, bottomTextInput].forEach(input => {
-      input.addEventListener('input', updatePage);
-    });
+    paperInput.addEventListener('input', updatePage);
+    headlineInput.addEventListener('input', updatePage);
+    subheadInput.addEventListener('input', updatePage);
+    taglineInput.addEventListener('input', updatePage);
+    bottomHeadingInput.addEventListener('input', updatePage);
+    bottomTextInput.addEventListener('input', updatePage);
 
-    imageInput.addEventListener('change', event => {
-      const file = event.target.files[0];
+    imageInput.addEventListener('change', function(event) {
+      var file = event.target.files[0];
       if (!file) return;
 
-      const reader = new FileReader();
-      reader.onload = e => {
+      var reader = new FileReader();
+      reader.onload = function(e) {
         heroPhoto.src = e.target.result;
+        heroPhoto.style.display = 'block';
+        photoPlaceholder.style.display = 'none';
       };
       reader.readAsDataURL(file);
     });
 
-    document.getElementById('randomBtn').addEventListener('click', () => {
+    document.getElementById('randomBtn').addEventListener('click', function() {
       randomWeather();
       headlineInput.value = sillyHeadlines[Math.floor(Math.random() * sillyHeadlines.length)];
       subheadInput.value = sillySubs[Math.floor(Math.random() * sillySubs.length)];
       updatePage();
     });
 
-    document.getElementById('shareBtn').addEventListener('click', async () => {
-      const shareText = `${paperInput.value}: ${headlineInput.value}`;
+    document.getElementById('shareBtn').addEventListener('click', function() {
+      var shareText = (paperInput.value || 'The Redtop') + ': ' + (headlineInput.value || 'Headline Goes Here!');
 
       if (navigator.share) {
-        try {
-          await navigator.share({
-            title: paperInput.value,
-            text: shareText,
-            url: window.location.href
-          });
-        } catch (error) {
-          console.log('Share cancelled', error);
-        }
-      } else {
-        try {
-          await navigator.clipboard.writeText(shareText + ' ' + window.location.href);
+        navigator.share({
+          title: paperInput.value || 'The Redtop',
+          text: shareText,
+          url: window.location.href
+        }).catch(function() {});
+      } else if (navigator.clipboard) {
+        navigator.clipboard.writeText(shareText + ' ' + window.location.href).then(function() {
           alert('Share text copied to clipboard!');
-        } catch (error) {
+        }).catch(function() {
           alert(shareText);
-        }
+        });
+      } else {
+        alert(shareText);
       }
     });
 
