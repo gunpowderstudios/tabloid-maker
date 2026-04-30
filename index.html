@@ -110,7 +110,7 @@
     }
 
     .tagline {
-      font-size: 13px;
+      font-size: 18px;
       font-weight: bold;
       margin-top: 6px;
       text-transform: uppercase;
@@ -124,6 +124,20 @@
       text-align: center;
       font-size: 22px;
       border-left: 5px solid #003a78;
+    }
+
+    .weather-icon {
+      display: block;
+      font-size: 42px;
+      line-height: 1;
+    }
+
+    .weather-quote {
+      display: block;
+      font-size: 11px;
+      margin-top: 4px;
+      font-weight: normal;
+      color: #333;
     }
 
     .poll {
@@ -154,9 +168,7 @@
     }
 
     .main-grid {
-      display: grid;
-      grid-template-columns: 210px 1fr;
-      gap: 14px;
+      display: block;
     }
 
     .sidebar {
@@ -206,26 +218,24 @@
     }
 
     .lead-content {
-      display: grid;
-      grid-template-columns: 1fr 150px;
-      gap: 10px;
-      align-items: start;
+      display: block;
     }
 
     .main-headline {
-      font-size: 76px;
-      line-height: .86;
+      font-size: clamp(40px, 6vw, 72px);
+      line-height: .9;
       font-weight: 1000;
-      letter-spacing: -3px;
+      letter-spacing: -2px;
       text-transform: uppercase;
       word-break: break-word;
     }
 
     .hero-photo {
-      width: 150px;
-      height: 150px;
+      width: 100%;
+      height: 360px;
       object-fit: cover;
-      border: 3px solid white;
+      border: 4px solid white;
+      margin-top: 10px;
     }
 
     .subhead {
@@ -245,6 +255,28 @@
       text-transform: uppercase;
       padding: 8px 10px;
       font-size: 18px;
+    }
+
+    .article-section {
+      margin-top: 14px;
+    }
+
+    .article-section h2 {
+      margin: 0 0 8px;
+      font-size: 26px;
+      line-height: 1;
+      text-transform: uppercase;
+      border-top: 4px solid #111;
+      border-bottom: 2px solid #111;
+      padding: 6px 0;
+    }
+
+    .article-columns {
+      column-count: 3;
+      column-gap: 20px;
+      font-size: 13px;
+      text-align: justify;
+      margin-top: 10px;
     }
 
     .tiny {
@@ -287,6 +319,16 @@
       <label for="imageInput">Main photo</label>
       <input id="imageInput" type="file" accept="image/*" />
 
+      <label for="bottomHeadingInput">Bottom section heading</label>
+      <input id="bottomHeadingInput" value="In Other News..." />
+
+      <label for="bottomTextInput">Bottom 3-column text</label>
+      <textarea id="bottomTextInput">Wizard banned from pub after turning the jukebox into a frog. Witnesses say the frog had excellent taste in music.
+
+Dragon denies fire claims after three cottages mysteriously became toast. Officials say the investigation is heating up.
+
+Local hero enters dungeon fully prepared, except for sword. "I thought I packed it," he said.</textarea>
+
       <button id="randomBtn">Make it more ridiculous</button>
       <button class="secondary" id="shareBtn">Share</button>
       <button class="secondary" onclick="window.print()">Print / Save as PDF</button>
@@ -299,25 +341,16 @@
             <div class="paper-name" id="paperName">The Redtop</div>
             <div class="tagline" id="tagline">The paper that supports the lavish lifestyle of its editor</div>
           </div>
-          <div class="top-ad">BANKERS!<br><span class="tiny">From the paper that loves a good scandal</span></div>
+          <div class="top-ad" id="weatherBox"><span class="weather-icon">☀️</span>18°C<br><span class="tiny">London - Sunny</span><span class="weather-quote">Don't forget your hat!</span></div>
         </header>
 
-        <section class="poll">
-          <img id="pollImage" src="https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=800&auto=format&fit=crop" alt="Crowd" />
-          <div class="poll-text">93% <span>think we are irresponsible</span></div>
-        </section>
+        
 
         <main class="main-grid">
-          <aside class="sidebar">
-            <img class="side-photo" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=400&auto=format&fit=crop" alt="Side story" />
-            <div class="side-headline">How Gnomes saved British culture</div>
-            <p class="side-copy">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non risus. Suspendisse lectus tortor, dignissim sit amet, adipiscing nec, ultricies sed, dolor. Cras elementum ultrices diam.</p>
-            <div class="side-headline">Standards fall at rival tabloid</div>
-            <p class="side-copy">Praesent dapibus, neque id cursus faucibus, tortor neque egestas augue, eu vulputate magna eros eu erat. Aliquam erat volutpat.</p>
-          </aside>
+          
 
           <section class="lead">
-            <div class="strapline">Now with added prurience and titillation</div>
+            
             <div class="lead-content">
               <div class="main-headline" id="headline">Dungeon Crawling Good For Society!</div>
               <img class="hero-photo" id="heroPhoto" src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=500&auto=format&fit=crop" alt="Main story" />
@@ -326,7 +359,16 @@
           </section>
         </main>
 
-        <footer class="footer-banner">We subvert the establishment, uphold truth and accountability <span class="tiny">see page 3</span></footer>
+        <section class="article-section">
+        <h2 id="bottomHeading">In Other News...</h2>
+        <div class="article-columns" id="bottomText">
+          <p>Wizard banned from pub after turning the jukebox into a frog. Witnesses say the frog had excellent taste in music.</p>
+          <p>Dragon denies fire claims after three cottages mysteriously became toast. Officials say the investigation is heating up.</p>
+          <p>Local hero enters dungeon fully prepared, except for sword. “I thought I packed it,” he said.</p>
+        </div>
+      </section>
+
+      <footer class="footer-banner">We subvert the establishment, uphold truth and accountability <span class="tiny">see page 3</span></footer>
       </article>
     </section>
   </div>
@@ -337,12 +379,16 @@
     const subheadInput = document.getElementById('subheadInput');
     const taglineInput = document.getElementById('taglineInput');
     const imageInput = document.getElementById('imageInput');
+    const bottomHeadingInput = document.getElementById('bottomHeadingInput');
+    const bottomTextInput = document.getElementById('bottomTextInput');
 
     const paperName = document.getElementById('paperName');
     const headline = document.getElementById('headline');
     const subhead = document.getElementById('subhead');
     const tagline = document.getElementById('tagline');
     const heroPhoto = document.getElementById('heroPhoto');
+    const bottomHeading = document.getElementById('bottomHeading');
+    const bottomText = document.getElementById('bottomText');
 
     const sillyHeadlines = [
       'Local Wizard Blames Goblins For Everything!',
@@ -360,14 +406,32 @@
       'Our brave reporters investigated for nearly seven minutes and found almost everything.'
     ];
 
+    // Simple fake weather generator
+    function randomWeather() {
+      const temps = Math.floor(Math.random() * 15) + 10; // 10–25°C
+      const conditions = ['Sunny', 'Cloudy', 'Rainy', 'Stormy', 'Windy'];
+      const icons = ['☀️','☁️','🌧️','⛈️','💨'];
+      const i = Math.floor(Math.random() * conditions.length);
+
+      let quote = "Don't forget your hat!";
+      if (conditions[i] === 'Rainy' || conditions[i] === 'Stormy') {
+        quote = "Don't forget your wellies!";
+      }
+
+      document.getElementById('weatherBox').innerHTML = `<span class="weather-icon">${icons[i]}</span>${temps}°C<br><span class="tiny">London - ${conditions[i]}</span><span class="weather-quote">${quote}</span>`;
+    }
+
     function updatePage() {
       paperName.textContent = paperInput.value || 'The Redtop';
       headline.textContent = headlineInput.value || 'Headline Goes Here!';
       subhead.textContent = subheadInput.value || 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.';
       tagline.textContent = taglineInput.value || 'The paper that supports the lavish lifestyle of its editor';
+      bottomHeading.textContent = bottomHeadingInput.value || 'In Other News...';
+      bottomText.innerHTML = (bottomTextInput.value || '').split('
+').filter(line => line.trim()).map(line => `<p>${line}</p>`).join('');
     }
 
-    [paperInput, headlineInput, subheadInput, taglineInput].forEach(input => {
+    [paperInput, headlineInput, subheadInput, taglineInput, bottomHeadingInput, bottomTextInput].forEach(input => {
       input.addEventListener('input', updatePage);
     });
 
@@ -382,6 +446,7 @@
     });
 
     document.getElementById('randomBtn').addEventListener('click', () => {
+      randomWeather();
       headlineInput.value = sillyHeadlines[Math.floor(Math.random() * sillyHeadlines.length)];
       subheadInput.value = sillySubs[Math.floor(Math.random() * sillySubs.length)];
       updatePage();
