@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Red Top Tabloid Maker</title>
+
   <style>
     * { box-sizing: border-box; }
 
@@ -31,10 +32,7 @@
       height: fit-content;
     }
 
-    .controls h1 {
-      margin-top: 0;
-      font-size: 24px;
-    }
+    .controls h1 { margin-top: 0; font-size: 24px; }
 
     label {
       display: block;
@@ -70,10 +68,7 @@
     }
 
     button:hover { background: #a90000; }
-
-    .secondary {
-      background: #111;
-    }
+    .secondary { background: #111; }
 
     .newspaper-wrap {
       overflow-x: auto;
@@ -140,85 +135,13 @@
       color: #333;
     }
 
-    .poll {
-      display: grid;
-      grid-template-columns: 210px 1fr;
-      margin: 10px 0;
-      background: #064893;
-      color: white;
-      align-items: center;
-    }
-
-    .poll img {
-      width: 100%;
-      height: 90px;
-      object-fit: cover;
-    }
-
-    .poll-text {
-      padding: 8px 14px;
-      font-size: 34px;
-      font-weight: 900;
-      line-height: .95;
-    }
-
-    .poll-text span {
-      font-size: 18px;
-      display: block;
-    }
-
-    .main-grid {
-      display: block;
-    }
-
-    .sidebar {
-      border-right: 2px solid #ddd;
-      padding-right: 12px;
-    }
-
-    .side-photo {
-      width: 100%;
-      height: 130px;
-      object-fit: cover;
-      border: 4px solid #eee;
-      margin-bottom: 10px;
-    }
-
-    .side-headline {
-      font-size: 24px;
-      line-height: 1;
-      text-decoration: underline;
-      font-weight: 800;
-      margin-bottom: 12px;
-    }
-
-    .side-copy {
-      font-size: 12px;
-      column-count: 1;
-      text-align: justify;
-    }
+    .main-grid { display: block; }
 
     .lead {
       border: 6px solid #111;
       padding: 8px;
       background: #101820;
       color: white;
-      position: relative;
-    }
-
-    .strapline {
-      background: white;
-      color: #d40000;
-      text-align: center;
-      font-weight: 900;
-      font-size: 15px;
-      padding: 4px;
-      margin-bottom: 6px;
-      text-transform: uppercase;
-    }
-
-    .lead-content {
-      display: block;
     }
 
     .main-headline {
@@ -236,6 +159,8 @@
       object-fit: cover;
       border: 4px solid white;
       margin-top: 10px;
+      background: #ddd;
+      display: block;
     }
 
     .subhead {
@@ -247,19 +172,7 @@
       padding-top: 8px;
     }
 
-    .footer-banner {
-      margin-top: 12px;
-      background: #e00000;
-      color: white;
-      font-weight: 900;
-      text-transform: uppercase;
-      padding: 8px 10px;
-      font-size: 18px;
-    }
-
-    .article-section {
-      margin-top: 14px;
-    }
+    .article-section { margin-top: 14px; }
 
     .article-section h2 {
       margin: 0 0 8px;
@@ -279,6 +192,18 @@
       margin-top: 10px;
     }
 
+    .article-columns p { margin-top: 0; }
+
+    .footer-banner {
+      margin-top: 12px;
+      background: #e00000;
+      color: white;
+      font-weight: 900;
+      text-transform: uppercase;
+      padding: 8px 10px;
+      font-size: 18px;
+    }
+
     .tiny {
       font-size: 10px;
       font-weight: bold;
@@ -288,6 +213,7 @@
       .app { grid-template-columns: 1fr; }
       .controls { order: 1; }
       .newspaper-wrap { order: 2; }
+      .newspaper { width: 760px; }
     }
 
     @media print {
@@ -298,6 +224,7 @@
     }
   </style>
 </head>
+
 <body>
   <div class="app">
     <section class="controls">
@@ -329,9 +256,9 @@ Dragon denies fire claims after three cottages mysteriously became toast. Offici
 
 Local hero enters dungeon fully prepared, except for sword. "I thought I packed it," he said.</textarea>
 
-      <button id="randomBtn">Make it more ridiculous</button>
-      <button class="secondary" id="shareBtn">Share</button>
-      <button class="secondary" onclick="window.print()">Print / Save as PDF</button>
+      <button id="randomBtn" type="button">Make it more ridiculous</button>
+      <button class="secondary" id="shareBtn" type="button">Share</button>
+      <button class="secondary" type="button" onclick="window.print()">Print / Save as PDF</button>
     </section>
 
     <section class="newspaper-wrap">
@@ -341,34 +268,36 @@ Local hero enters dungeon fully prepared, except for sword. "I thought I packed 
             <div class="paper-name" id="paperName">The Redtop</div>
             <div class="tagline" id="tagline">The paper that supports the lavish lifestyle of its editor</div>
           </div>
-          <div class="top-ad" id="weatherBox"><span class="weather-icon">☀️</span>18°C<br><span class="tiny">London - Sunny</span><span class="weather-quote">Don't forget your hat!</span></div>
+
+          <div class="top-ad" id="weatherBox">
+            <span class="weather-icon">☀️</span>
+            18°C<br>
+            <span class="tiny">London - Sunny</span>
+            <span class="weather-quote">Don't forget your hat!</span>
+          </div>
         </header>
 
-        
-
         <main class="main-grid">
-          
-
           <section class="lead">
-            
-            <div class="lead-content">
-              <div class="main-headline" id="headline">Dungeon Crawling Good For Society!</div>
-              <img class="hero-photo" id="heroPhoto" src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=500&auto=format&fit=crop" alt="Main story" />
-            </div>
+            <div class="main-headline" id="headline">Dungeon Crawling Good For Society!</div>
+            <img
+              class="hero-photo"
+              id="heroPhoto"
+              src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='400'%3E%3Crect width='100%25' height='100%25' fill='%23dddddd'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='Arial' font-size='36' fill='%23666666'%3EUpload your photo%3C/text%3E%3C/svg%3E"
+              alt="Main story"
+            />
             <div class="subhead" id="subhead">Brave editors say rolling dice and drawing maps is now officially very important.</div>
           </section>
         </main>
 
         <section class="article-section">
-        <h2 id="bottomHeading">In Other News...</h2>
-        <div class="article-columns" id="bottomText">
-          <p>Wizard banned from pub after turning the jukebox into a frog. Witnesses say the frog had excellent taste in music.</p>
-          <p>Dragon denies fire claims after three cottages mysteriously became toast. Officials say the investigation is heating up.</p>
-          <p>Local hero enters dungeon fully prepared, except for sword. “I thought I packed it,” he said.</p>
-        </div>
-      </section>
+          <h2 id="bottomHeading">In Other News...</h2>
+          <div class="article-columns" id="bottomText"></div>
+        </section>
 
-      <footer class="footer-banner">We subvert the establishment, uphold truth and accountability <span class="tiny">see page 3</span></footer>
+        <footer class="footer-banner">
+          We subvert the establishment, uphold truth and accountability <span class="tiny">see page 3</span>
+        </footer>
       </article>
     </section>
   </div>
@@ -406,19 +335,13 @@ Local hero enters dungeon fully prepared, except for sword. "I thought I packed 
       'Our brave reporters investigated for nearly seven minutes and found almost everything.'
     ];
 
-    // Simple fake weather generator
-    function randomWeather() {
-      const temps = Math.floor(Math.random() * 15) + 10; // 10–25°C
-      const conditions = ['Sunny', 'Cloudy', 'Rainy', 'Stormy', 'Windy'];
-      const icons = ['☀️','☁️','🌧️','⛈️','💨'];
-      const i = Math.floor(Math.random() * conditions.length);
-
-      let quote = "Don't forget your hat!";
-      if (conditions[i] === 'Rainy' || conditions[i] === 'Stormy') {
-        quote = "Don't forget your wellies!";
-      }
-
-      document.getElementById('weatherBox').innerHTML = `<span class="weather-icon">${icons[i]}</span>${temps}°C<br><span class="tiny">London - ${conditions[i]}</span><span class="weather-quote">${quote}</span>`;
+    function escapeHTML(text) {
+      return text
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
     }
 
     function updatePage() {
@@ -427,8 +350,39 @@ Local hero enters dungeon fully prepared, except for sword. "I thought I packed 
       subhead.textContent = subheadInput.value || 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.';
       tagline.textContent = taglineInput.value || 'The paper that supports the lavish lifestyle of its editor';
       bottomHeading.textContent = bottomHeadingInput.value || 'In Other News...';
-      bottomText.innerHTML = (bottomTextInput.value || '').split('
-').filter(line => line.trim()).map(line => `<p>${line}</p>`).join('');
+
+      const paragraphs = (bottomTextInput.value || '')
+        .split('\n')
+        .filter(line => line.trim())
+        .map(line => `<p>${escapeHTML(line)}</p>`)
+        .join('');
+
+      bottomText.innerHTML = paragraphs;
+    }
+
+    function randomWeather() {
+      const temps = Math.floor(Math.random() * 15) + 10;
+      const conditions = ['Sunny', 'Cloudy', 'Rainy', 'Stormy', 'Windy'];
+      const icons = ['☀️', '☁️', '🌧️', '⛈️', '💨'];
+      const i = Math.floor(Math.random() * conditions.length);
+
+      let quote = "Don't forget your hat!";
+      if (conditions[i] === 'Rainy' || conditions[i] === 'Stormy') {
+        quote = "Don't forget your wellies!";
+      }
+      if (conditions[i] === 'Windy') {
+        quote = 'Hold onto your wig!';
+      }
+      if (conditions[i] === 'Cloudy') {
+        quote = 'Probably fine. Probably.';
+      }
+
+      document.getElementById('weatherBox').innerHTML = `
+        <span class="weather-icon">${icons[i]}</span>
+        ${temps}°C<br>
+        <span class="tiny">London - ${conditions[i]}</span>
+        <span class="weather-quote">${quote}</span>
+      `;
     }
 
     [paperInput, headlineInput, subheadInput, taglineInput, bottomHeadingInput, bottomTextInput].forEach(input => {
@@ -438,6 +392,7 @@ Local hero enters dungeon fully prepared, except for sword. "I thought I packed 
     imageInput.addEventListener('change', event => {
       const file = event.target.files[0];
       if (!file) return;
+
       const reader = new FileReader();
       reader.onload = e => {
         heroPhoto.src = e.target.result;
@@ -466,8 +421,12 @@ Local hero enters dungeon fully prepared, except for sword. "I thought I packed 
           console.log('Share cancelled', error);
         }
       } else {
-        await navigator.clipboard.writeText(shareText + ' ' + window.location.href);
-        alert('Share text copied to clipboard!');
+        try {
+          await navigator.clipboard.writeText(shareText + ' ' + window.location.href);
+          alert('Share text copied to clipboard!');
+        } catch (error) {
+          alert(shareText);
+        }
       }
     });
 
