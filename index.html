@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Red Top (fake news) Tabloid Maker</title>
+  <title>Red Top Tabloid Maker</title>
 
   <style>
     * { box-sizing: border-box; }
@@ -105,7 +105,7 @@
       color: white;
       padding: 8px 14px 10px;
       display: grid;
-      grid-template-columns: 1fr 170px;
+      grid-template-columns: 1fr 136px;
       gap: 12px;
       align-items: stretch;
     }
@@ -130,10 +130,10 @@
     .top-ad {
       background: white;
       color: #00448c;
-      padding: 8px;
+      padding: 6px;
       font-weight: 900;
       text-align: center;
-      font-size: 22px;
+      font-size: 18px;
       border-left: 5px solid #003a78;
     }
 
@@ -145,16 +145,16 @@
 
     .weather-quote {
       display: block;
-      font-size: 11px;
-      margin-top: 4px;
+      font-size: 9px;
+      margin-top: 3px;
       font-weight: normal;
       color: #333;
     }
 
     .weather-date {
       display: block;
-      font-size: 11px;
-      margin-bottom: 4px;
+      font-size: 9px;
+      margin-bottom: 3px;
       font-weight: bold;
       color: #333;
       text-transform: uppercase;
@@ -242,7 +242,7 @@
     }
 
     .tiny {
-      font-size: 10px;
+      font-size: 8px;
       font-weight: bold;
     }
 
@@ -323,6 +323,8 @@
       <label for="paperInput">Paper name</label>
       <input id="paperInput" value="Name your paper...">
 
+      
+
       <label for="headlineInput">Main headline</label>
       <textarea id="headlineInput">Add your headline...</textarea>
 
@@ -339,8 +341,7 @@
       <input id="imagePositionInput" type="range" min="0" max="100" value="50">
       <p class="control-tip">Move the photo up or down inside the frame.</p>
 
-      <label for="footerInput">Footer quote / banner</label>
-      <textarea id="footerInput">&quot;If you want to tell people the truth, make them laugh, otherwise they'll kill you.&quot; — Oscar Wilde</textarea>
+      
 
       <label for="bottomHeadingInput">Bottom section heading</label>
       <input id="bottomHeadingInput" value="In Other News...">
@@ -371,7 +372,7 @@ Local hero enters dungeon fully prepared, except for sword. "I thought I packed 
             <span class="weather-date" id="weatherDate">Today</span>
             <span class="weather-icon">&#9728;</span>
             18&deg;C<br>
-            <span class="tiny">Local weather - Sunny</span>
+            <span class="tiny">London - Sunny</span>
             <span class="weather-quote">Don't forget your hat!</span>
           </div>
         </header>
@@ -390,12 +391,9 @@ Local hero enters dungeon fully prepared, except for sword. "I thought I packed 
           <div class="article-columns" id="bottomText"></div>
         </section>
 
-        <footer class="footer-banner">
-          <span id="footerText">"If you want to tell people the truth, make them laugh, otherwise they'll kill you." — Oscar Wilde</span> <span class="tiny">see page 3</span>
+        <footer class="footer-banner" style="font-size:11px; line-height:1.4; text-transform:none; color:white;">
+          © fakenews — Enjoy making up your own tabloid headlines. Try to keep it family-friendly… but have fun. You may share, use, print and post in any non-commercial way. We are not responsible for what you write, create, or share. Information is only stored in your browser cache and no files are stored anywhere.
         </footer>
-        <div style="text-align:center; font-size:12px; margin-top:8px; color:#444;">
-          © fakenews — Enjoy making up your own tabloid headlines. Try to keep it family-friendly… but have fun. You may share, use, print and post in any non-commercal way. We are not responsible for what you write, create, or share. Information is only stored in your browser cache and no files are stored anywhere.
-        </div>
       </article>
     </section>
   </div>
@@ -407,7 +405,6 @@ Local hero enters dungeon fully prepared, except for sword. "I thought I packed 
     var taglineInput = document.getElementById('taglineInput');
     var imageInput = document.getElementById('imageInput');
     var imagePositionInput = document.getElementById('imagePositionInput');
-    var footerInput = document.getElementById('footerInput');
     var bottomHeadingInput = document.getElementById('bottomHeadingInput');
     var bottomTextInput = document.getElementById('bottomTextInput');
 
@@ -417,7 +414,6 @@ Local hero enters dungeon fully prepared, except for sword. "I thought I packed 
     var tagline = document.getElementById('tagline');
     var heroPhoto = document.getElementById('heroPhoto');
     var photoPlaceholder = document.getElementById('photoPlaceholder');
-    var footerText = document.getElementById('footerText');
     var bottomHeading = document.getElementById('bottomHeading');
     var bottomText = document.getElementById('bottomText');
     var weatherBox = document.getElementById('weatherBox');
@@ -425,18 +421,102 @@ Local hero enters dungeon fully prepared, except for sword. "I thought I packed 
 
     var sillyHeadlines = [
       'Local Wizard Blames Goblins For Everything!',
-      'Dungeon Crawling Good For Society!',
-      'Elf Seen Buying Cheese At Midnight!',
-      'Dragon Denies Burning Village!',
-      'Board Games Make People 93% More Heroic!',
-      'Gnome Editor Demands More Treasure!'
+      'Huge Hole Appears On Motorway – Police Looking Into It!',
+      'Man Buys Ladder – Finally Gets On Another Level!',
+      'Banana Found Wearing Pyjamas, Authorities Confused',
+      'Invisible Man Seen In Town – No One Knows What He Looks Like',
+      'World’s Laziest Man Wins Sitting Competition',
+      'Cow Escapes Farm – Claims It Was An Udder Disaster',
+      'Dog Learns To Drive, Immediately Goes To Park',
+      'Time Traveller Arrives Late, Blames Traffic Tomorrow',
+      'Chef Arrested For Beating Eggs – Says They Started It',
+      'Man Invents Waterproof Tea – It’s Still Wet',
+      'Fish Gets Job – Works From Home Office Tank',
+      'Local Man Trips Over Wireless Internet',
+      'Skeleton Refuses To Fight – Has No Guts',
+      'Clock Factory Explodes – Workers Just Making Time',
+      'Duck Opens Bakery – Bills Are High',
+      'Cat Becomes Mayor – Promises More Naps',
+      'Man Loses Left Side – He’s All Right Now',
+      'Thief Steals Calendar – Gets 12 Months',
+      'Ghost Goes On Diet – Needs To Watch His Figure',
+      'Town Bans Roundabouts – Going Nowhere Fast',
+      'Man Brings Spoon To Supermarket – Just In Case',
+      'Chicken Crosses Road Twice – Confused But Determined',
+      'Local Hero Saves Sandwich From Certain Doom',
+      'Man Buys Belt Made Of Watches – Waist Of Time',
+      'Weather Forecast: Dark With Chance Of Dad Jokes',
+      'Library Burns Down – All Stories Lost',
+      'Math Teacher Loves Graphs – Finds Them Very Appealing',
+      'Man Invents Silent Drum – No One Hears About It',
+      'Pirate Opens Gym – Gets Into Ship Shape',
+      'Robot Takes Holiday – Needs To Recharge',
+      'Farmer Wins Award – Outstanding In His Field',
+      'Light Bulb Wins Prize – Very Bright Idea',
+      'Man Eats Clock – Says It Was Time Consuming',
+      'Painter Jailed – Framed For His Work',
+      'Bread Factory Closes – No Dough Left',
+      'Mountain Not Funny – Hill Areas Joke',
+      'Sausage Factory Explosion – Links Broken',
+      'Man Talks To Plants – They Leaf Him Alone',
+      'Astronaut Breaks Up – Needs Space',
+      'Music Shop Closes – No Note Left Unturned',
+      'Gardener Quits – Too Much Thyme On Hands',
+      'Bank Robber Uses Banana – Splits With Cash',
+      'Baker Wins Race – Kneaded The Dough',
+      'Electrician Shocked By Bill – Watt Happened?',
+      'Man Falls Into Well – Doesn’t See That Well',
+      'Clown Opens School – Teaches Funny Business',
+      'Fish Opens Restaurant – Great Sole Food',
+      'Man Builds Car Out Of Spaghetti – Pasta Speed Record',
+      'Dentist Becomes DJ – Spins Great Fillings'
     ];
 
     var sillySubs = [
       'Experts are baffled, villagers are furious, and one goblin refused to comment.',
-      'A shocking new report suggests rolling dice may improve bravery, luck and snack consumption.',
-      'Officials say the matter is under review, probably after lunch.',
-      'Our brave reporters investigated for nearly seven minutes and found almost everything.'
+      'Authorities say this was entirely predictable, yet somehow still surprising.',
+      'Eyewitnesses describe scenes of mild confusion and moderate tea drinking.',
+      'Officials confirm absolutely nothing, but strongly suspect something.',
+      'Local residents say they “had a feeling this might happen eventually.”',
+      'One expert nodded thoughtfully and then went home for lunch.',
+      'Investigations continue, mostly involving biscuits and speculation.',
+      'Sources close to the situation say it’s “a bit odd, really.”',
+      'No one panicked, but several people raised their eyebrows.',
+      'The situation remains under control, assuming there ever was control.',
+      'Witnesses agree it was “definitely something.”',
+      'Authorities urge calm while quietly Googling what to do next.',
+      'A spokesperson described the event as “unhelpful.”',
+      'Neighbours say they heard something, but it might have been the TV.',
+      'The mayor has promised to look into it… eventually.',
+      'Experts say it could have been worse, though they won’t say how.',
+      'Early reports suggest it all started with a bad idea.',
+      'Investigators are following several leads, most of them pointless.',
+      'A full report will be released once someone writes it.',
+      'The public is advised to carry on as normal, whatever that means.'
+    ];
+
+    // New: silly "In Other News" items (British humour)
+    var otherNewsItems = [
+      'Council installs new bench. Nobody sits on it out of respect.',
+      'Man waits all day for bus. Gets on wrong one out of habit.',
+      'Village fete cancelled after cake judged “too nice to eat.”',
+      'Local shop sells out of nothing in particular. Customers delighted.',
+      'Pigeon refuses to move from road. Wins standoff with traffic.',
+      'Tea declared “adequate” in nationwide survey. Spirits lifted.',
+      'Neighbour returns borrowed ladder. Nobody remembers lending it.',
+      'Dog attends meeting. Contributes more than expected.',
+      'Weather described as “a bit much.” Britain carries on.',
+      'Man fixes squeaky door. Now misses the noise.',
+      'Pub quiz ends in draw. Everyone claims moral victory.',
+      'Postman waves. Residents unsure how to respond.',
+      'Garden gnome slightly moved. Investigation ongoing.',
+      'Kettle boils. Household gathers to witness.',
+      'Queue forms for no clear reason. Nobody questions it.',
+      'Local hero finds remote. Loses it immediately.',
+      'Man reads instructions. Situation worsens.',
+      'Car won’t start. Owner stares at it thoughtfully.',
+      'Scone debate escalates. Jam and cream involved.',
+      'Rain stops briefly. Celebration planned then cancelled.'
     ];
 
     function splitLines(text) {
@@ -458,7 +538,6 @@ Local hero enters dungeon fully prepared, except for sword. "I thought I packed 
       headline.textContent = headlineInput.value || 'Headline Goes Here!';
       subhead.textContent = subheadInput.value || 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.';
       tagline.textContent = taglineInput.value || 'The paper that supports the lavish lifestyle of its editor';
-      footerText.textContent = footerInput.value || 'Footer text goes here';
       bottomHeading.textContent = bottomHeadingInput.value || 'In Other News...';
 
       bottomText.innerHTML = '';
@@ -508,7 +587,7 @@ Local hero enters dungeon fully prepared, except for sword. "I thought I packed 
       weatherBox.innerHTML = '<span class="weather-date">' + getCurrentDateText() + '</span>' +
         '<span class="weather-icon">' + icons[i] + '</span>' +
         temps + '&deg;C<br>' +
-        '<span class="tiny">Local weather - ' + conditions[i] + '</span>' +
+        '<span class="tiny">London - ' + conditions[i] + '</span>' +
         '<span class="weather-quote">' + quote + '</span>';
     }
 
@@ -516,7 +595,6 @@ Local hero enters dungeon fully prepared, except for sword. "I thought I packed 
     headlineInput.addEventListener('input', updatePage);
     subheadInput.addEventListener('input', updatePage);
     taglineInput.addEventListener('input', updatePage);
-    footerInput.addEventListener('input', updatePage);
     bottomHeadingInput.addEventListener('input', updatePage);
     bottomTextInput.addEventListener('input', updatePage);
     imagePositionInput.addEventListener('input', updateImagePosition);
@@ -538,8 +616,21 @@ Local hero enters dungeon fully prepared, except for sword. "I thought I packed 
 
     document.getElementById('randomBtn').addEventListener('click', function() {
       randomWeather();
+
+      // headline + sub
       headlineInput.value = sillyHeadlines[Math.floor(Math.random() * sillyHeadlines.length)];
       subheadInput.value = sillySubs[Math.floor(Math.random() * sillySubs.length)];
+
+      // pick 3 random "In Other News" items
+      var picks = [];
+      while (picks.length < 3) {
+        var item = otherNewsItems[Math.floor(Math.random() * otherNewsItems.length)];
+        if (picks.indexOf(item) === -1) picks.push(item);
+      }
+      bottomTextInput.value = picks.join('
+
+');
+
       updatePage();
     });
 
