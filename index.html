@@ -627,9 +627,7 @@ Local hero enters dungeon fully prepared, except for sword. "I thought I packed 
         var item = otherNewsItems[Math.floor(Math.random() * otherNewsItems.length)];
         if (picks.indexOf(item) === -1) picks.push(item);
       }
-      bottomTextInput.value = picks.join('
-
-');
+      bottomTextInput.value = picks.join('\\n\\n');
 
       updatePage();
     });
