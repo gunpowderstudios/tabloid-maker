@@ -241,6 +241,39 @@
       font-size: 18px;
     }
 
+    .classifieds-banner {
+      margin-top: 12px;
+      background: #e00000;
+      color: white;
+      padding: 8px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      font-size: 11px;
+      line-height: 1.25;
+    }
+
+    .classified-ad {
+      border: 1px solid rgba(255,255,255,.75);
+      padding: 6px;
+      min-height: 58px;
+    }
+
+    .classified-ad strong {
+      display: block;
+      font-size: 12px;
+      text-transform: uppercase;
+      margin-bottom: 3px;
+    }
+
+    .small-print {
+      text-align: center;
+      font-size: 10px;
+      margin-top: 8px;
+      color: #444;
+      line-height: 1.35;
+    }
+
     .tiny {
       font-size: 8px;
       font-weight: bold;
@@ -343,6 +376,20 @@
 
       
 
+      <label for="classifiedAd1Input">Classified ad 1</label>
+      <textarea id="classifiedAd1Input">Bow Upgrade!
+Simple spell lets arrows shoot round corners. Results may vary. Walls not included.</textarea>
+
+      <label for="classifiedAd2Input">Classified ad 2</label>
+      <textarea id="classifiedAd2Input">Elven Boots
+For sale. One not-very-careful owner. Slightly cursed, very comfortable.</textarea>
+
+      <label for="classifiedAd3Input">Classified ad 3</label>
+      <textarea id="classifiedAd3Input">Halfling Fishing Rod
+May need twine. Ideal for fish, goblins, and suspicious puddles.</textarea>
+
+      <button class="secondary" id="toggleClassifiedsBtn" type="button">Remove Classified Ads</button>
+
       <label for="bottomHeadingInput">Bottom section heading</label>
       <input id="bottomHeadingInput" value="In Other News...">
 
@@ -391,9 +438,15 @@ Local hero enters dungeon fully prepared, except for sword. "I thought I packed 
           <div class="article-columns" id="bottomText"></div>
         </section>
 
-        <footer class="footer-banner" style="font-size:11px; line-height:1.4; text-transform:none; color:white;">
-          © fakenews — Enjoy making up your own tabloid headlines. Try to keep it family-friendly… but have fun. You may share, use, print and post in any non-commercial way. We are not responsible for what you write, create, or share. Information is only stored in your browser cache and no files are stored anywhere.
-        </footer>
+        <section class="classifieds-banner" id="classifiedsBanner" aria-label="Fake dungeon classified ads">
+          <div class="classified-ad" id="classifiedAd1"></div>
+          <div class="classified-ad" id="classifiedAd2"></div>
+          <div class="classified-ad" id="classifiedAd3"></div>
+        </section>
+
+        <div class="small-print">
+          © The Wasted Wizard Tavern Newsdesk Editor Fred the Gnome. Some stories may need fact checking especially after closing time.
+        </div>
       </article>
     </section>
   </div>
@@ -405,6 +458,9 @@ Local hero enters dungeon fully prepared, except for sword. "I thought I packed 
     var taglineInput = document.getElementById('taglineInput');
     var imageInput = document.getElementById('imageInput');
     var imagePositionInput = document.getElementById('imagePositionInput');
+    var classifiedAd1Input = document.getElementById('classifiedAd1Input');
+    var classifiedAd2Input = document.getElementById('classifiedAd2Input');
+    var classifiedAd3Input = document.getElementById('classifiedAd3Input');
     var bottomHeadingInput = document.getElementById('bottomHeadingInput');
     var bottomTextInput = document.getElementById('bottomTextInput');
 
@@ -414,6 +470,10 @@ Local hero enters dungeon fully prepared, except for sword. "I thought I packed 
     var tagline = document.getElementById('tagline');
     var heroPhoto = document.getElementById('heroPhoto');
     var photoPlaceholder = document.getElementById('photoPlaceholder');
+    var classifiedsBanner = document.getElementById('classifiedsBanner');
+    var classifiedAd1 = document.getElementById('classifiedAd1');
+    var classifiedAd2 = document.getElementById('classifiedAd2');
+    var classifiedAd3 = document.getElementById('classifiedAd3');
     var bottomHeading = document.getElementById('bottomHeading');
     var bottomText = document.getElementById('bottomText');
     var weatherBox = document.getElementById('weatherBox');
@@ -529,6 +589,22 @@ Local hero enters dungeon fully prepared, except for sword. "I thought I packed 
       return p;
     }
 
+    function updateClassifiedAd(box, text) {
+      var lines = splitLines(text);
+      var title = lines[0] || 'Classified Ad';
+      var body = lines.slice(1).join(' ').trim();
+
+      box.innerHTML = '';
+
+      var strong = document.createElement('strong');
+      strong.textContent = title;
+      box.appendChild(strong);
+
+      var span = document.createElement('span');
+      span.textContent = body;
+      box.appendChild(span);
+    }
+
     function updateImagePosition() {
       heroPhoto.style.objectPosition = 'center ' + imagePositionInput.value + '%';
     }
@@ -538,6 +614,9 @@ Local hero enters dungeon fully prepared, except for sword. "I thought I packed 
       headline.textContent = headlineInput.value || 'Headline Goes Here!';
       subhead.textContent = subheadInput.value || 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.';
       tagline.textContent = taglineInput.value || 'The paper that supports the lavish lifestyle of its editor';
+      updateClassifiedAd(classifiedAd1, classifiedAd1Input.value);
+      updateClassifiedAd(classifiedAd2, classifiedAd2Input.value);
+      updateClassifiedAd(classifiedAd3, classifiedAd3Input.value);
       bottomHeading.textContent = bottomHeadingInput.value || 'In Other News...';
 
       bottomText.innerHTML = '';
@@ -595,6 +674,9 @@ Local hero enters dungeon fully prepared, except for sword. "I thought I packed 
     headlineInput.addEventListener('input', updatePage);
     subheadInput.addEventListener('input', updatePage);
     taglineInput.addEventListener('input', updatePage);
+    classifiedAd1Input.addEventListener('input', updatePage);
+    classifiedAd2Input.addEventListener('input', updatePage);
+    classifiedAd3Input.addEventListener('input', updatePage);
     bottomHeadingInput.addEventListener('input', updatePage);
     bottomTextInput.addEventListener('input', updatePage);
     imagePositionInput.addEventListener('input', updateImagePosition);
@@ -614,6 +696,16 @@ Local hero enters dungeon fully prepared, except for sword. "I thought I packed 
       reader.readAsDataURL(file);
     });
 
+    document.getElementById('toggleClassifiedsBtn').addEventListener('click', function() {
+      if (classifiedsBanner.style.display === 'none') {
+        classifiedsBanner.style.display = 'grid';
+        this.textContent = 'Remove Classified Ads';
+      } else {
+        classifiedsBanner.style.display = 'none';
+        this.textContent = 'Show Classified Ads';
+      }
+    });
+
     document.getElementById('randomBtn').addEventListener('click', function() {
       randomWeather();
 
@@ -627,7 +719,7 @@ Local hero enters dungeon fully prepared, except for sword. "I thought I packed 
         var item = otherNewsItems[Math.floor(Math.random() * otherNewsItems.length)];
         if (picks.indexOf(item) === -1) picks.push(item);
       }
-      bottomTextInput.value = picks.join('\\n\\n');
+      bottomTextInput.value = picks.join('\n\n');
 
       updatePage();
     });
@@ -678,6 +770,7 @@ Local hero enters dungeon fully prepared, except for sword. "I thought I packed 
       console.assert(typeof randomWeather === 'function', 'randomWeather should exist');
       console.assert(typeof getCurrentDateText === 'function', 'getCurrentDateText should exist');
       console.assert(typeof updateImagePosition === 'function', 'updateImagePosition should exist');
+      console.assert(typeof updateClassifiedAd === 'function', 'updateClassifiedAd should exist');
     }
 
     setWeatherDate();
