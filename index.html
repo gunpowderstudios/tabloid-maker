@@ -1,781 +1,263 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Red Top Tabloid Maker</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Red Top Tabloid Maker</title>
 
-  <style>
-    * { box-sizing: border-box; }
+<style>
+* { box-sizing: border-box; }
 
-    body {
-      margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
-      background: #e7e7e7;
-      color: #111;
-    }
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: #e7e7e7;
+}
 
-    .app {
-      display: grid;
-      grid-template-columns: 340px 1fr;
-      gap: 24px;
-      padding: 24px;
-      max-width: 1300px;
-      margin: auto;
-    }
+.app {
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  gap: 24px;
+  padding: 24px;
+  max-width: 1300px;
+  margin: auto;
+}
 
-    .controls {
-      background: white;
-      padding: 20px;
-      border-radius: 14px;
-      box-shadow: 0 8px 24px rgba(0,0,0,.12);
-      height: fit-content;
-    }
+.controls {
+  background: white;
+  padding: 20px;
+  border-radius: 14px;
+  box-shadow: 0 8px 24px rgba(0,0,0,.12);
+}
 
-    .controls h1 {
-      margin-top: 0;
-      font-size: 24px;
-    }
+label {
+  display: block;
+  font-weight: bold;
+  margin: 14px 0 6px;
+}
 
-    label {
-      display: block;
-      font-weight: bold;
-      margin: 14px 0 6px;
-    }
+input, textarea, button {
+  width: 100%;
+  font: inherit;
+}
 
-    input, textarea, button {
-      width: 100%;
-      font: inherit;
-    }
+input, textarea {
+  padding: 10px;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+}
 
-    input, textarea {
-      padding: 10px;
-      border: 2px solid #ccc;
-      border-radius: 8px;
-    }
+textarea { min-height: 90px; }
 
-    input[type="range"] {
-      padding: 0;
-      border: 0;
-      border-radius: 0;
-    }
+button {
+  margin-top: 10px;
+  padding: 12px;
+  background: #d40000;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
 
-    textarea {
-      min-height: 90px;
-      resize: vertical;
-    }
+.secondary { background: #111; }
 
-    button {
-      margin-top: 14px;
-      padding: 12px 14px;
-      border: 0;
-      border-radius: 8px;
-      background: #d40000;
-      color: white;
-      font-weight: bold;
-      cursor: pointer;
-    }
+.newspaper {
+  width: 760px;
+  background: #fff;
+  margin: auto;
+  padding: 14px;
+}
 
-    button:hover { background: #a90000; }
-    .secondary { background: #111; }
+.masthead {
+  background: #e00000;
+  color: white;
+  display: grid;
+  grid-template-columns: 1fr 140px;
+  padding: 10px;
+}
 
-    .print-tip,
-    .control-tip {
-      font-size: 12px;
-      margin-top: 6px;
-      color: #666;
-    }
+.paper-name {
+  font-size: 70px;
+  font-weight: 900;
+  font-style: italic;
+}
 
-    .newspaper-wrap {
-      overflow-x: auto;
-      padding-bottom: 20px;
-    }
+.tagline { font-size: 18px; }
 
-    .newspaper {
-      width: 760px;
-      background: #fff;
-      padding: 14px;
-      margin: 0 auto;
-      box-shadow: 0 10px 30px rgba(0,0,0,.25);
-      border: 1px solid #ccc;
-    }
+.top-ad {
+  background: white;
+  color: #00448c;
+  text-align: center;
+  padding: 6px;
+}
 
-    .masthead {
-      background: #e00000;
-      color: white;
-      padding: 8px 14px 10px;
-      display: grid;
-      grid-template-columns: 1fr 136px;
-      gap: 12px;
-      align-items: stretch;
-    }
+.weather-icon { font-size: 42px; }
 
-    .paper-name {
-      font-size: 78px;
-      line-height: .85;
-      font-weight: 900;
-      font-style: italic;
-      letter-spacing: -5px;
-      text-transform: uppercase;
-      overflow-wrap: anywhere;
-    }
+.lead {
+  background: #101820;
+  color: white;
+  padding: 10px;
+}
 
-    .tagline {
-      font-size: 18px;
-      font-weight: bold;
-      margin-top: 6px;
-      text-transform: uppercase;
-    }
+.main-headline {
+  font-size: 60px;
+  font-weight: 900;
+}
 
-    .top-ad {
-      background: white;
-      color: #00448c;
-      padding: 6px;
-      font-weight: 900;
-      text-align: center;
-      font-size: 18px;
-      border-left: 5px solid #003a78;
-    }
+.hero-photo {
+  width: 100%;
+  height: 360px;
+  object-fit: cover;
+  object-position: center;
+  margin-top: 10px;
+}
 
-    .weather-icon {
-      display: block;
-      font-size: 42px;
-      line-height: 1;
-    }
+.subhead {
+  margin-top: 8px;
+  font-weight: bold;
+}
 
-    .weather-quote {
-      display: block;
-      font-size: 9px;
-      margin-top: 3px;
-      font-weight: normal;
-      color: #333;
-    }
+.article-columns {
+  column-count: 3;
+  column-gap: 20px;
+  font-size: 13px;
+}
 
-    .weather-date {
-      display: block;
-      font-size: 9px;
-      margin-bottom: 3px;
-      font-weight: bold;
-      color: #333;
-      text-transform: uppercase;
-    }
+.classifieds-banner {
+  background: #e00000;
+  color: white;
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 8px;
+  padding: 8px;
+}
 
-    .lead {
-      border: 6px solid #111;
-      padding: 8px;
-      background: #101820;
-      color: white;
-    }
+.classified-ad {
+  border: 1px solid white;
+  padding: 6px;
+  font-size: 11px;
+}
 
-    .main-headline {
-      font-size: clamp(40px, 6vw, 72px);
-      line-height: .9;
-      font-weight: 1000;
-      letter-spacing: -2px;
-      text-transform: uppercase;
-      word-break: break-word;
-    }
+.small-print {
+  text-align: center;
+  font-size: 10px;
+  margin-top: 6px;
+}
 
-    .hero-photo {
-      width: 100%;
-      height: 360px;
-      object-fit: cover;
-      object-position: center 50%;
-      border: 4px solid white;
-      margin-top: 10px;
-      background: #ddd;
-      display: block;
-    }
+</style>
 
-    .placeholder {
-      height: 360px;
-      border: 4px solid white;
-      margin-top: 10px;
-      background: #ddd;
-      color: #666;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 32px;
-      font-weight: bold;
-    }
-
-    .subhead {
-      margin-top: 8px;
-      font-size: 19px;
-      line-height: 1.2;
-      font-weight: bold;
-      border-top: 2px solid white;
-      padding-top: 8px;
-    }
-
-    .article-section { margin-top: 14px; }
-
-    .article-section h2 {
-      margin: 0 0 8px;
-      font-size: 26px;
-      line-height: 1;
-      text-transform: uppercase;
-      border-top: 4px solid #111;
-      border-bottom: 2px solid #111;
-      padding: 6px 0;
-    }
-
-    .article-columns {
-      column-count: 3;
-      column-gap: 20px;
-      font-size: 13px;
-      text-align: justify;
-      margin-top: 10px;
-    }
-
-    .article-columns p { margin-top: 0; }
-
-    .footer-banner {
-      margin-top: 12px;
-      background: #e00000;
-      color: white;
-      font-weight: 900;
-      text-transform: uppercase;
-      padding: 8px 10px;
-      font-size: 18px;
-    }
-
-    .classifieds-banner {
-      margin-top: 12px;
-      background: #e00000;
-      color: white;
-      padding: 8px;
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 8px;
-      font-size: 11px;
-      line-height: 1.25;
-    }
-
-    .classified-ad {
-      border: 1px solid rgba(255,255,255,.75);
-      padding: 6px;
-      min-height: 58px;
-    }
-
-    .classified-ad strong {
-      display: block;
-      font-size: 12px;
-      text-transform: uppercase;
-      margin-bottom: 3px;
-    }
-
-    .small-print {
-      text-align: center;
-      font-size: 10px;
-      margin-top: 8px;
-      color: #444;
-      line-height: 1.35;
-    }
-
-    .tiny {
-      font-size: 8px;
-      font-weight: bold;
-    }
-
-    @media (max-width: 950px) {
-      .app { grid-template-columns: 1fr; }
-      .controls { order: 1; }
-      .newspaper-wrap { order: 2; }
-      .newspaper { width: 760px; }
-    }
-
-    @media print {
-      * {
-        -webkit-print-color-adjust: exact !important;
-        print-color-adjust: exact !important;
-      }
-
-      @page {
-        size: A4 portrait;
-        margin: 8mm;
-      }
-
-      html, body {
-        background: white !important;
-        margin: 0 !important;
-        padding: 0 !important;
-      }
-
-      .controls {
-        display: none !important;
-      }
-
-      .app {
-        display: block !important;
-        padding: 0 !important;
-        margin: 0 !important;
-        max-width: none !important;
-      }
-
-      .newspaper-wrap {
-        overflow: visible !important;
-        padding: 0 !important;
-      }
-
-      .newspaper {
-        width: 190mm !important;
-        margin: 0 auto !important;
-        box-shadow: none !important;
-        border: 1px solid #ccc !important;
-        page-break-inside: avoid !important;
-      }
-
-      .masthead {
-        background: #e00000 !important;
-        color: white !important;
-      }
-
-      .lead {
-        background: #101820 !important;
-        color: white !important;
-      }
-
-      .footer-banner {
-        background: #e00000 !important;
-        color: white !important;
-      }
-    }
-  </style>
-
-  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 </head>
 
 <body>
-  <div class="app">
-    <section class="controls">
-      <h1>Tabloid Front Page Maker</h1>
-      <p>Make your own ridiculous red-top front page. Add a headline, paper name and photo.</p>
 
-      <label for="paperInput">Paper name</label>
-      <input id="paperInput" value="Name your paper...">
+<div class="app">
 
-      
+<div class="controls">
 
-      <label for="headlineInput">Main headline</label>
-      <textarea id="headlineInput">Add your headline...</textarea>
+<label>Paper Name</label>
+<input id="paperInput" value="THE ADVENTURER">
 
-      <label for="subheadInput">Subheading</label>
-      <textarea id="subheadInput">Add your subheadline...</textarea>
+<label>Headline</label>
+<textarea id="headlineInput">DUNGEON EXIT BLOCKED BY GLOWING RED DRAGON!</textarea>
 
-      <label for="taglineInput">Tagline</label>
-      <input id="taglineInput" value="Add your tagline...">
+<label>Subhead</label>
+<textarea id="subheadInput">"Our exit was blocked — there was no escape!"</textarea>
 
-      <label for="imageInput">Main photo</label>
-      <input id="imageInput" type="file" accept="image/*">
+<label>Image</label>
+<input id="imageInput" type="file">
 
-      <label for="imagePositionInput">Adjust photo position</label>
-      <input id="imagePositionInput" type="range" min="0" max="100" value="50">
-      <p class="control-tip">Move the photo up or down inside the frame.</p>
+<button id="downloadBtn">Download PNG</button>
 
-      
+</div>
 
-      <label for="classifiedAd1Input">Classified ad 1</label>
-      <textarea id="classifiedAd1Input">Bow Upgrade!
-Simple spell lets arrows shoot round corners. Results may vary. Walls not included.</textarea>
+<div class="newspaper" id="newspaper">
 
-      <label for="classifiedAd2Input">Classified ad 2</label>
-      <textarea id="classifiedAd2Input">Elven Boots
-For sale. One not-very-careful owner. Slightly cursed, very comfortable.</textarea>
+<div class="masthead">
+<div>
+<div class="paper-name" id="paperName">THE ADVENTURER</div>
+<div class="tagline">Stories from the heroes that made it out alive!</div>
+</div>
 
-      <label for="classifiedAd3Input">Classified ad 3</label>
-      <textarea id="classifiedAd3Input">Halfling Fishing Rod
-May need twine. Ideal for fish, goblins, and suspicious puddles.</textarea>
+<div class="top-ad">
+<div class="weather-icon">☀️</div>
+18°C<br>London - Sunny
+</div>
+</div>
 
-      <button class="secondary" id="toggleClassifiedsBtn" type="button">Remove Classified Ads</button>
+<div class="lead">
+<div class="main-headline" id="headline">DUNGEON EXIT BLOCKED BY GLOWING RED DRAGON!</div>
 
-      <label for="bottomHeadingInput">Bottom section heading</label>
-      <input id="bottomHeadingInput" value="In Other News...">
+<img id="heroPhoto" class="hero-photo" src="">
 
-      <label for="bottomTextInput">Bottom 3-column text</label>
-      <textarea id="bottomTextInput">Wizard banned from pub after turning the jukebox into a frog. Witnesses say the frog had excellent taste in music.
+<div class="subhead" id="subhead">"Our exit was blocked — there was no escape!"</div>
+</div>
 
-Dragon denies fire claims after three cottages mysteriously became toast. Officials say the investigation is heating up.
+<div class="article-columns">
+<p>Local dwarf complains loudly about dragons again.</p>
+<p>Wizard forgets spell mid-battle, blames stress.</p>
+<p>Halfling survives entirely on snacks.</p>
+</div>
 
-Local hero enters dungeon fully prepared, except for sword. "I thought I packed it," he said.</textarea>
+<div class="classifieds-banner">
+<div class="classified-ad">Bow upgrade – shoot round corners</div>
+<div class="classified-ad">Elven boots – slightly cursed</div>
+<div class="classified-ad">Fishing rod – may need twine</div>
+</div>
 
-      <button id="randomBtn" type="button">Make it more ridiculous</button>
-      <button class="secondary" id="downloadBtn" type="button">Download PNG</button>
-      <button class="secondary" id="shareBtn" type="button">Share</button>
-      <button class="secondary" type="button" onclick="window.print()">Print / Save as PDF</button>
-      <p class="print-tip">Tip: Turn ON "Background graphics" in print settings to keep colours.</p>
-    </section>
+<div class="small-print">
+© The Wasted Wizard Tavern Newsdesk Editor Fred the Gnome. Some stories may need fact checking especially after closing time.
+</div>
 
-    <section class="newspaper-wrap">
-      <article class="newspaper" id="newspaper">
-        <header class="masthead">
-          <div>
-            <div class="paper-name" id="paperName">The Redtop</div>
-            <div class="tagline" id="tagline">For all the best sports, entertainment and gossip, maybe try another newspaper!</div>
-          </div>
+</div>
+</div>
 
-          <div class="top-ad" id="weatherBox">
-            <span class="weather-date" id="weatherDate">Today</span>
-            <span class="weather-icon">&#9728;</span>
-            18&deg;C<br>
-            <span class="tiny">London - Sunny</span>
-            <span class="weather-quote">Don't forget your hat!</span>
-          </div>
-        </header>
+<script>
 
-        <main>
-          <section class="lead">
-            <div class="main-headline" id="headline">Dungeon Crawling Good For Society!</div>
-            <div class="placeholder" id="photoPlaceholder">Upload your photo</div>
-            <img class="hero-photo" id="heroPhoto" alt="Main story" style="display:none;">
-            <div class="subhead" id="subhead">Brave editors say rolling dice and drawing maps is now officially very important.</div>
-          </section>
-        </main>
+var paperInput = document.getElementById('paperInput');
+var headlineInput = document.getElementById('headlineInput');
+var subheadInput = document.getElementById('subheadInput');
 
-        <section class="article-section">
-          <h2 id="bottomHeading">In Other News...</h2>
-          <div class="article-columns" id="bottomText"></div>
-        </section>
+var paperName = document.getElementById('paperName');
+var headline = document.getElementById('headline');
+var subhead = document.getElementById('subhead');
+var heroPhoto = document.getElementById('heroPhoto');
 
-        <section class="classifieds-banner" id="classifiedsBanner" aria-label="Fake dungeon classified ads">
-          <div class="classified-ad" id="classifiedAd1"></div>
-          <div class="classified-ad" id="classifiedAd2"></div>
-          <div class="classified-ad" id="classifiedAd3"></div>
-        </section>
+paperInput.oninput = () => paperName.textContent = paperInput.value;
+headlineInput.oninput = () => headline.textContent = headlineInput.value;
+subheadInput.oninput = () => subhead.textContent = subheadInput.value;
 
-        <div class="small-print">
-          © The Wasted Wizard Tavern Newsdesk Editor Fred the Gnome. Some stories may need fact checking especially after closing time.
-        </div>
-      </article>
-    </section>
-  </div>
+document.getElementById('imageInput').onchange = function(e){
+  var reader = new FileReader();
+  reader.onload = function(ev){
+    heroPhoto.src = ev.target.result;
+  };
+  reader.readAsDataURL(e.target.files[0]);
+};
 
-  <script>
-    var paperInput = document.getElementById('paperInput');
-    var headlineInput = document.getElementById('headlineInput');
-    var subheadInput = document.getElementById('subheadInput');
-    var taglineInput = document.getElementById('taglineInput');
-    var imageInput = document.getElementById('imageInput');
-    var imagePositionInput = document.getElementById('imagePositionInput');
-    var classifiedAd1Input = document.getElementById('classifiedAd1Input');
-    var classifiedAd2Input = document.getElementById('classifiedAd2Input');
-    var classifiedAd3Input = document.getElementById('classifiedAd3Input');
-    var bottomHeadingInput = document.getElementById('bottomHeadingInput');
-    var bottomTextInput = document.getElementById('bottomTextInput');
+document.getElementById('downloadBtn').onclick = function(){
 
-    var paperName = document.getElementById('paperName');
-    var headline = document.getElementById('headline');
-    var subhead = document.getElementById('subhead');
-    var tagline = document.getElementById('tagline');
-    var heroPhoto = document.getElementById('heroPhoto');
-    var photoPlaceholder = document.getElementById('photoPlaceholder');
-    var classifiedsBanner = document.getElementById('classifiedsBanner');
-    var classifiedAd1 = document.getElementById('classifiedAd1');
-    var classifiedAd2 = document.getElementById('classifiedAd2');
-    var classifiedAd3 = document.getElementById('classifiedAd3');
-    var bottomHeading = document.getElementById('bottomHeading');
-    var bottomText = document.getElementById('bottomText');
-    var weatherBox = document.getElementById('weatherBox');
-    var weatherDate = document.getElementById('weatherDate');
+  // FIX IMAGE SQUASH
+  var originalHeight = heroPhoto.style.height;
+  heroPhoto.style.height = "auto";
 
-    var sillyHeadlines = [
-      'Local Wizard Blames Goblins For Everything!',
-      'Huge Hole Appears On Motorway – Police Looking Into It!',
-      'Man Buys Ladder – Finally Gets On Another Level!',
-      'Banana Found Wearing Pyjamas, Authorities Confused',
-      'Invisible Man Seen In Town – No One Knows What He Looks Like',
-      'World’s Laziest Man Wins Sitting Competition',
-      'Cow Escapes Farm – Claims It Was An Udder Disaster',
-      'Dog Learns To Drive, Immediately Goes To Park',
-      'Time Traveller Arrives Late, Blames Traffic Tomorrow',
-      'Chef Arrested For Beating Eggs – Says They Started It',
-      'Man Invents Waterproof Tea – It’s Still Wet',
-      'Fish Gets Job – Works From Home Office Tank',
-      'Local Man Trips Over Wireless Internet',
-      'Skeleton Refuses To Fight – Has No Guts',
-      'Clock Factory Explodes – Workers Just Making Time',
-      'Duck Opens Bakery – Bills Are High',
-      'Cat Becomes Mayor – Promises More Naps',
-      'Man Loses Left Side – He’s All Right Now',
-      'Thief Steals Calendar – Gets 12 Months',
-      'Ghost Goes On Diet – Needs To Watch His Figure',
-      'Town Bans Roundabouts – Going Nowhere Fast',
-      'Man Brings Spoon To Supermarket – Just In Case',
-      'Chicken Crosses Road Twice – Confused But Determined',
-      'Local Hero Saves Sandwich From Certain Doom',
-      'Man Buys Belt Made Of Watches – Waist Of Time',
-      'Weather Forecast: Dark With Chance Of Dad Jokes',
-      'Library Burns Down – All Stories Lost',
-      'Math Teacher Loves Graphs – Finds Them Very Appealing',
-      'Man Invents Silent Drum – No One Hears About It',
-      'Pirate Opens Gym – Gets Into Ship Shape',
-      'Robot Takes Holiday – Needs To Recharge',
-      'Farmer Wins Award – Outstanding In His Field',
-      'Light Bulb Wins Prize – Very Bright Idea',
-      'Man Eats Clock – Says It Was Time Consuming',
-      'Painter Jailed – Framed For His Work',
-      'Bread Factory Closes – No Dough Left',
-      'Mountain Not Funny – Hill Areas Joke',
-      'Sausage Factory Explosion – Links Broken',
-      'Man Talks To Plants – They Leaf Him Alone',
-      'Astronaut Breaks Up – Needs Space',
-      'Music Shop Closes – No Note Left Unturned',
-      'Gardener Quits – Too Much Thyme On Hands',
-      'Bank Robber Uses Banana – Splits With Cash',
-      'Baker Wins Race – Kneaded The Dough',
-      'Electrician Shocked By Bill – Watt Happened?',
-      'Man Falls Into Well – Doesn’t See That Well',
-      'Clown Opens School – Teaches Funny Business',
-      'Fish Opens Restaurant – Great Sole Food',
-      'Man Builds Car Out Of Spaghetti – Pasta Speed Record',
-      'Dentist Becomes DJ – Spins Great Fillings'
-    ];
+  html2canvas(document.getElementById('newspaper'), {
+    scale: 2,
+    backgroundColor: "#ffffff"
+  }).then(canvas => {
 
-    var sillySubs = [
-      'Experts are baffled, villagers are furious, and one goblin refused to comment.',
-      'Authorities say this was entirely predictable, yet somehow still surprising.',
-      'Eyewitnesses describe scenes of mild confusion and moderate tea drinking.',
-      'Officials confirm absolutely nothing, but strongly suspect something.',
-      'Local residents say they “had a feeling this might happen eventually.”',
-      'One expert nodded thoughtfully and then went home for lunch.',
-      'Investigations continue, mostly involving biscuits and speculation.',
-      'Sources close to the situation say it’s “a bit odd, really.”',
-      'No one panicked, but several people raised their eyebrows.',
-      'The situation remains under control, assuming there ever was control.',
-      'Witnesses agree it was “definitely something.”',
-      'Authorities urge calm while quietly Googling what to do next.',
-      'A spokesperson described the event as “unhelpful.”',
-      'Neighbours say they heard something, but it might have been the TV.',
-      'The mayor has promised to look into it… eventually.',
-      'Experts say it could have been worse, though they won’t say how.',
-      'Early reports suggest it all started with a bad idea.',
-      'Investigators are following several leads, most of them pointless.',
-      'A full report will be released once someone writes it.',
-      'The public is advised to carry on as normal, whatever that means.'
-    ];
+    var link = document.createElement('a');
+    link.download = "tabloid.png";
+    link.href = canvas.toDataURL();
+    link.click();
 
-    // New: silly "In Other News" items (British humour)
-    var otherNewsItems = [
-      'Council installs new bench. Nobody sits on it out of respect.',
-      'Man waits all day for bus. Gets on wrong one out of habit.',
-      'Village fete cancelled after cake judged “too nice to eat.”',
-      'Local shop sells out of nothing in particular. Customers delighted.',
-      'Pigeon refuses to move from road. Wins standoff with traffic.',
-      'Tea declared “adequate” in nationwide survey. Spirits lifted.',
-      'Neighbour returns borrowed ladder. Nobody remembers lending it.',
-      'Dog attends meeting. Contributes more than expected.',
-      'Weather described as “a bit much.” Britain carries on.',
-      'Man fixes squeaky door. Now misses the noise.',
-      'Pub quiz ends in draw. Everyone claims moral victory.',
-      'Postman waves. Residents unsure how to respond.',
-      'Garden gnome slightly moved. Investigation ongoing.',
-      'Kettle boils. Household gathers to witness.',
-      'Queue forms for no clear reason. Nobody questions it.',
-      'Local hero finds remote. Loses it immediately.',
-      'Man reads instructions. Situation worsens.',
-      'Car won’t start. Owner stares at it thoughtfully.',
-      'Scone debate escalates. Jam and cream involved.',
-      'Rain stops briefly. Celebration planned then cancelled.'
-    ];
+    // restore layout
+    heroPhoto.style.height = originalHeight;
+  });
 
-    function splitLines(text) {
-      return (text || '').split('\n');
-    }
+};
 
-    function makeParagraph(text) {
-      var p = document.createElement('p');
-      p.textContent = text;
-      return p;
-    }
+</script>
 
-    function updateClassifiedAd(box, text) {
-      var lines = splitLines(text);
-      var title = lines[0] || 'Classified Ad';
-      var body = lines.slice(1).join(' ').trim();
-
-      box.innerHTML = '';
-
-      var strong = document.createElement('strong');
-      strong.textContent = title;
-      box.appendChild(strong);
-
-      var span = document.createElement('span');
-      span.textContent = body;
-      box.appendChild(span);
-    }
-
-    function updateImagePosition() {
-      heroPhoto.style.objectPosition = 'center ' + imagePositionInput.value + '%';
-    }
-
-    function updatePage() {
-      paperName.textContent = paperInput.value || 'The Redtop';
-      headline.textContent = headlineInput.value || 'Headline Goes Here!';
-      subhead.textContent = subheadInput.value || 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.';
-      tagline.textContent = taglineInput.value || 'The paper that supports the lavish lifestyle of its editor';
-      updateClassifiedAd(classifiedAd1, classifiedAd1Input.value);
-      updateClassifiedAd(classifiedAd2, classifiedAd2Input.value);
-      updateClassifiedAd(classifiedAd3, classifiedAd3Input.value);
-      bottomHeading.textContent = bottomHeadingInput.value || 'In Other News...';
-
-      bottomText.innerHTML = '';
-      var lines = splitLines(bottomTextInput.value);
-      for (var i = 0; i < lines.length; i++) {
-        if (lines[i].trim()) {
-          bottomText.appendChild(makeParagraph(lines[i]));
-        }
-      }
-
-      updateImagePosition();
-    }
-
-    function getCurrentDateText() {
-      var today = new Date();
-      return today.toLocaleDateString('en-GB', {
-        weekday: 'short',
-        day: 'numeric',
-        month: 'short',
-        year: 'numeric'
-      });
-    }
-
-    function setWeatherDate() {
-      if (weatherDate) {
-        weatherDate.textContent = getCurrentDateText();
-      }
-    }
-
-    function randomWeather() {
-      var temps = Math.floor(Math.random() * 15) + 10;
-      var conditions = ['Sunny', 'Cloudy', 'Rainy', 'Stormy', 'Windy'];
-      var icons = ['&#9728;', '&#9729;', '&#127783;', '&#9928;', '&#128168;'];
-      var i = Math.floor(Math.random() * conditions.length);
-      var quote = "Don't forget your hat!";
-
-      if (conditions[i] === 'Rainy' || conditions[i] === 'Stormy') {
-        quote = "Don't forget your wellies!";
-      }
-      if (conditions[i] === 'Windy') {
-        quote = 'Hold onto your wig!';
-      }
-      if (conditions[i] === 'Cloudy') {
-        quote = 'Probably fine. Probably.';
-      }
-
-      weatherBox.innerHTML = '<span class="weather-date">' + getCurrentDateText() + '</span>' +
-        '<span class="weather-icon">' + icons[i] + '</span>' +
-        temps + '&deg;C<br>' +
-        '<span class="tiny">London - ' + conditions[i] + '</span>' +
-        '<span class="weather-quote">' + quote + '</span>';
-    }
-
-    paperInput.addEventListener('input', updatePage);
-    headlineInput.addEventListener('input', updatePage);
-    subheadInput.addEventListener('input', updatePage);
-    taglineInput.addEventListener('input', updatePage);
-    classifiedAd1Input.addEventListener('input', updatePage);
-    classifiedAd2Input.addEventListener('input', updatePage);
-    classifiedAd3Input.addEventListener('input', updatePage);
-    bottomHeadingInput.addEventListener('input', updatePage);
-    bottomTextInput.addEventListener('input', updatePage);
-    imagePositionInput.addEventListener('input', updateImagePosition);
-
-    imageInput.addEventListener('change', function(event) {
-      var file = event.target.files[0];
-      if (!file) return;
-
-      var reader = new FileReader();
-      reader.onload = function(e) {
-        heroPhoto.src = e.target.result;
-        heroPhoto.style.display = 'block';
-        photoPlaceholder.style.display = 'none';
-        imagePositionInput.value = 50;
-        updateImagePosition();
-      };
-      reader.readAsDataURL(file);
-    });
-
-    document.getElementById('toggleClassifiedsBtn').addEventListener('click', function() {
-      if (classifiedsBanner.style.display === 'none') {
-        classifiedsBanner.style.display = 'grid';
-        this.textContent = 'Remove Classified Ads';
-      } else {
-        classifiedsBanner.style.display = 'none';
-        this.textContent = 'Show Classified Ads';
-      }
-    });
-
-    document.getElementById('randomBtn').addEventListener('click', function() {
-      randomWeather();
-
-      // headline + sub
-      headlineInput.value = sillyHeadlines[Math.floor(Math.random() * sillyHeadlines.length)];
-      subheadInput.value = sillySubs[Math.floor(Math.random() * sillySubs.length)];
-
-      // pick 3 random "In Other News" items
-      var picks = [];
-      while (picks.length < 3) {
-        var item = otherNewsItems[Math.floor(Math.random() * otherNewsItems.length)];
-        if (picks.indexOf(item) === -1) picks.push(item);
-      }
-      bottomTextInput.value = picks.join('\n\n');
-
-      updatePage();
-    });
-
-    document.getElementById('downloadBtn').addEventListener('click', function() {
-      var newspaper = document.getElementById('newspaper');
-
-      if (typeof html2canvas !== 'function') {
-        alert('Download tool is still loading. Please try again in a moment.');
-        return;
-      }
-
-      html2canvas(newspaper, {
-        scale: 2,
-        backgroundColor: '#ffffff'
-      }).then(function(canvas) {
-        var link = document.createElement('a');
-        link.download = 'tabloid-front-page.png';
-        link.href = canvas.toDataURL('image/png');
-        link.click();
-      });
-    });
-
-    document.getElementById('shareBtn').addEventListener('click', function() {
-      var shareText = (paperInput.value || 'The Redtop') + ': ' + (headlineInput.value || 'Headline Goes Here!');
-
-      if (navigator.share) {
-        navigator.share({
-          title: paperInput.value || 'The Redtop',
-          text: shareText,
-          url: window.location.href
-        }).catch(function() {});
-      } else if (navigator.clipboard) {
-        navigator.clipboard.writeText(shareText + ' ' + window.location.href).then(function() {
-          alert('Share text copied to clipboard!');
-        }).catch(function() {
-          alert(shareText);
-        });
-      } else {
-        alert(shareText);
-      }
-    });
-
-    function runSelfTests() {
-      console.assert(splitLines('one\ntwo').length === 2, 'splitLines should split two lines');
-      console.assert(splitLines('').length === 1, 'splitLines should handle empty text');
-      console.assert(typeof updatePage === 'function', 'updatePage should exist');
-      console.assert(typeof randomWeather === 'function', 'randomWeather should exist');
-      console.assert(typeof getCurrentDateText === 'function', 'getCurrentDateText should exist');
-      console.assert(typeof updateImagePosition === 'function', 'updateImagePosition should exist');
-      console.assert(typeof updateClassifiedAd === 'function', 'updateClassifiedAd should exist');
-    }
-
-    setWeatherDate();
-    updatePage();
-    runSelfTests();
-  </script>
 </body>
 </html>
